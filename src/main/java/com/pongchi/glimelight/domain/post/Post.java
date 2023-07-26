@@ -78,6 +78,9 @@ public class Post {
     @OneToMany(mappedBy = "post")
     private ArrayList<Comment> comments;
 
+    @OneToMany(mappedBy = "post")
+    private ArrayList<PostHashTag> postHashTags;
+
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdDate;
