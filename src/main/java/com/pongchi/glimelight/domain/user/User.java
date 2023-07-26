@@ -40,4 +40,12 @@ public class User {
 
     @OneToMany(mappedBy = "writer")
     private ArrayList<Post> posts;
+
+    @OneToMany(mappedBy = "toUser")
+    private ArrayList<Subscribe> mySubscribes;
+    private long mySubscribes_count;
+
+    @OneToMany(mappedBy = "fromUser")
+    private ArrayList<Subscribe> otherSubscribes;
+    private long otherSubscribes_count;
 }
