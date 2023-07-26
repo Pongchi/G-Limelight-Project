@@ -1,8 +1,6 @@
-package com.pongchi.glimelight.domain.hashtag;
+package com.pongchi.glimelight.domain.post;
 
 import java.util.ArrayList;
-
-import com.pongchi.glimelight.domain.post.PostHashTag;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

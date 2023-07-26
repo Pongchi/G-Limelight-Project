@@ -1,7 +1,5 @@
 package com.pongchi.glimelight.domain.post;
 
-import com.pongchi.glimelight.domain.hashtag.Hashtag;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
