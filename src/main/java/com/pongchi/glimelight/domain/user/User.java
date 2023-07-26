@@ -5,11 +5,13 @@ import java.util.UUID;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.pongchi.glimelight.domain.comment.Comment;
 import com.pongchi.glimelight.domain.post.Post;
 import com.pongchi.glimelight.domain.subscribe.Subscribe;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -39,14 +41,17 @@ public class User {
 
     private Role role;
 
-    @OneToMany(mappedBy = "writer")
+    @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY)
     private ArrayList<Post> posts;
 
-    @OneToMany(mappedBy = "toUser")
+    @OneToMany(mappedBy = "toUser", fetch = FetchType.LAZY)
     private ArrayList<Subscribe> mySubscribes;
     private long mySubscribes_count;
 
-    @OneToMany(mappedBy = "fromUser")
+    @OneToMany(mappedBy = "fromUser", fetch = FetchType.LAZY)
     private ArrayList<Subscribe> otherSubscribes;
     private long otherSubscribes_count;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private ArrayList<Comment> comments;
 }

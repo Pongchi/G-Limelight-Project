@@ -1,6 +1,7 @@
 package com.pongchi.glimelight.domain.comment;
 
 import com.pongchi.glimelight.domain.post.Post;
+import com.pongchi.glimelight.domain.user.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,4 +24,11 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @Column(nullable = false)
+    private String message;
 }
