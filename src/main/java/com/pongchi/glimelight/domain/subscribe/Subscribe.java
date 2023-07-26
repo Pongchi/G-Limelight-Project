@@ -1,4 +1,6 @@
-package com.pongchi.glimelight.domain.user;
+package com.pongchi.glimelight.domain.subscribe;
+
+import com.pongchi.glimelight.domain.user.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

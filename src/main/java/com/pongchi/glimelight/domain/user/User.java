@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.pongchi.glimelight.domain.post.Post;
+import com.pongchi.glimelight.domain.subscribe.Subscribe;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

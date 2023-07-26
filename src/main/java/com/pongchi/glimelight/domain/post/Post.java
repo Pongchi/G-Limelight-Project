@@ -9,6 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.pongchi.glimelight.domain.comment.Comment;
 import com.pongchi.glimelight.domain.game.Game;
 import com.pongchi.glimelight.domain.like.Like;
 import com.pongchi.glimelight.domain.user.User;
@@ -70,6 +71,11 @@ public class Post {
     @OneToMany
     @JoinColumn(name = "post_id")
     private ArrayList<Like> likes;
+
+    private int like_count;
+
+    @OneToMany(mappedBy = "post")
+    private ArrayList<Comment> comments;
 
     @CreatedDate
     @Column(updatable = false)
