@@ -21,7 +21,6 @@ import lombok.Getter;
     - post : ArrayList<Post>  ( OneToMany)
     - subscribe : ArrayList<Subscribe> ( OneToMany )
     - subscribe_count : int
-    - Like : ArrayList<Like> ( OneToMany )
  */
 
 @Getter
@@ -31,7 +30,7 @@ public class User {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "BINARY(16)")
+    @Column(columnDefinition = "BINARY(16)", name = "user_id")
     private UUID id;
 
     @Column(length = 32, nullable = false)
@@ -39,6 +38,6 @@ public class User {
 
     private Role role;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "writer")
     private ArrayList<Post> posts;
 }
