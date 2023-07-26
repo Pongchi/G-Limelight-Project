@@ -1,13 +1,16 @@
 package com.pongchi.glimelight.domain.post;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.UUID;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import com.pongchi.glimelight.domain.game.Game;
+import com.pongchi.glimelight.domain.like.Like;
 import com.pongchi.glimelight.domain.user.User;
 
 import jakarta.persistence.Column;
@@ -16,6 +19,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 
 /*
@@ -59,6 +63,13 @@ public class Post {
 
     @Column(length = 255, nullable = false)
     private String videoUrl;
+
+    @ColumnDefault("0")
+    private int view_count;
+
+    @OneToMany
+    @JoinColumn(name = "post_id")
+    private ArrayList<Like> likes;
 
     @CreatedDate
     @Column(updatable = false)
