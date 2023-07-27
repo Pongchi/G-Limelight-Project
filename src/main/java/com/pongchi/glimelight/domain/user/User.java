@@ -15,6 +15,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import lombok.Builder;
 import lombok.Getter;
 
 /*
@@ -45,7 +46,7 @@ public class User {
     private Role role;
 
     @Column(length = 32)
-    private String name;
+    private String nickname;
 
     @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY)
     private ArrayList<Post> posts;
@@ -60,4 +61,11 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private ArrayList<Comment> comments;
+
+    @Builder
+    public User(String email, String password, String nickname) {
+        this.email = email;
+        this.password = password;
+        this.nickname = nickname;
+    }
 }
