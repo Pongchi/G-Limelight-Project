@@ -2,10 +2,13 @@ package com.pongchi.glimelight.api.v1;
 
 import java.util.UUID;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pongchi.glimelight.api.v1.dto.UserDto;
 import com.pongchi.glimelight.api.v1.dto.UserLoginRequestDto;
 import com.pongchi.glimelight.api.v1.dto.UserLoginResponseDto;
 import com.pongchi.glimelight.api.v1.dto.UserRegisterRequestDto;
@@ -25,8 +28,13 @@ public class UserController {
         return userService.register(requestDto);
     }
 
+    @GetMapping("/api/v1/users/{id}")
+    public UserDto findById(@PathVariable("id") UUID id) {
+        return userService.findById(id);
+    }
+
     // 유저 로그인 - GET 메소드를 써야할 것 같지만 보안상의 이유로 POST
-    @PostMapping("/api/v1/user/login")
+    @PostMapping("/api/v1/users/login")
     public UserLoginResponseDto login(@RequestBody UserLoginRequestDto requestDto) {
         return userService.login(requestDto);
     }
