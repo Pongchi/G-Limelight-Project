@@ -22,19 +22,18 @@ public class UserService {
     
     @Transactional
     public UUID register(UserRegisterRequestDto requestDto) {
-        return userRepository.save(requestDto.toEntity()
-                .getId());
+        return userRepository.save(requestDto.toEntity()).getId();
     }
 
     @Transactional
     public UserLoginResponseDto login(UserLoginRequestDto requestDto) {
-        User user = userRepository.login(requestDto.getEmail(), requestDto.getPassword());
+        User user = userRepository.login(requestDto.getEmail(), requestDto.getPassword()).get();
         return new UserLoginResponseDto(user);
     }
 
     @Transactional(readOnly = true)
     public UserDto findById(UUID id) {
-        User user = userRepository.findById(id);
+        User user = userRepository.findById(id).get();
         return new UserDto(user);
     }
 }

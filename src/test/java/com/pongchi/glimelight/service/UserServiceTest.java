@@ -1,16 +1,21 @@
 package com.pongchi.glimelight.service;
 
-import com.pongchi.glimelight.api.v1.dto.UserRegisterRequestDto;
-
-import java.util.UUID;
-import org.junit.jupiter.api.Test;
-import lombok.RequiredArgsConstructor;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RequiredArgsConstructor
-public class UserServiceTest {
+import java.util.UUID;
 
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.pongchi.glimelight.api.v1.dto.UserRegisterRequestDto;
+import com.pongchi.glimelight.domain.user.UserRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@SpringBootTest
+public class UserServiceTest {
+    
     private UserService userService;
 
     @Test
