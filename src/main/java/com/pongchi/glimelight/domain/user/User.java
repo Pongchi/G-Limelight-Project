@@ -36,10 +36,16 @@ public class User {
     @Column(columnDefinition = "BINARY(16)", name = "user_id")
     private UUID id;
 
+    @Column(nullable = false)
+    private String email;
+
     @Column(length = 32, nullable = false)
     private String password;
 
     private Role role;
+
+    @Column(length = 32)
+    private String name;
 
     @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY)
     private ArrayList<Post> posts;
