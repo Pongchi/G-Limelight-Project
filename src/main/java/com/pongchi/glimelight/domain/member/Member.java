@@ -1,4 +1,4 @@
-package com.pongchi.glimelight.domain.user;
+package com.pongchi.glimelight.domain.member;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -29,12 +29,12 @@ import lombok.Getter;
 
 @Getter
 @Entity
-public class User {
+public class Member {
     
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "BINARY(16)", name = "user_id")
+    @Column(columnDefinition = "BINARY(16)", name = "member_id")
     private UUID id;
 
     @Column(nullable = false)
@@ -51,19 +51,19 @@ public class User {
     @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY)
     private ArrayList<Post> posts;
 
-    @OneToMany(mappedBy = "toUser", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "toMember", fetch = FetchType.LAZY)
     private ArrayList<Subscribe> mySubscribes;
     private long mySubscribes_count;
 
-    @OneToMany(mappedBy = "fromUser", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "fromMember", fetch = FetchType.LAZY)
     private ArrayList<Subscribe> otherSubscribes;
     private long otherSubscribes_count;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private ArrayList<Comment> comments;
 
     @Builder
-    public User(String email, String password, String nickname) {
+    public Member(String email, String password, String nickname) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;

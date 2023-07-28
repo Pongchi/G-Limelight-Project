@@ -1,6 +1,6 @@
 package com.pongchi.glimelight.domain.subscribe;
 
-import com.pongchi.glimelight.domain.user.User;
+import com.pongchi.glimelight.domain.member.Member;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,7 +18,7 @@ import lombok.Getter;
 	uniqueConstraints = {
 		@UniqueConstraint(
 			name="subscribe_uk",
-			columnNames = {"fromUser", "toUser"}
+			columnNames = {"fromMember", "toMember"}
 		)
 	}
 )
@@ -29,10 +29,10 @@ public class Subscribe {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "fromUser")
-    private User fromUser;
+    @JoinColumn(name = "fromMember")
+    private Member fromMember;
 
     @ManyToOne
-    @JoinColumn(name = "toUser")
-    private User toUser;
+    @JoinColumn(name = "toMember")
+    private Member toMember;
 }

@@ -19,7 +19,7 @@ public class Hashtag {
     private long id;
 
     @Column(nullable = false, unique = true)
-    private String value;
+    private String tag;
 
     @OneToMany(mappedBy = "hashtag")
     private ArrayList<PostHashTag> postHashTag;

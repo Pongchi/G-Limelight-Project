@@ -1,4 +1,4 @@
-package com.pongchi.glimelight.domain.user;
+package com.pongchi.glimelight.domain.member;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -12,7 +12,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import com.pongchi.glimelight.domain.comment.Comment;
 import com.pongchi.glimelight.domain.game.Game;
 import com.pongchi.glimelight.domain.like.Like;
-import com.pongchi.glimelight.domain.user.User;
+import com.pongchi.glimelight.domain.member.Member;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -50,8 +50,8 @@ public class Post {
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User writer;
+    @JoinColumn(name = "member_id")
+    private Member writer;
 
     @ManyToOne
     @JoinColumn(name = "game_id")
