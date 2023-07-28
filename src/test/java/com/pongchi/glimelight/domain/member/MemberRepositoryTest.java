@@ -1,22 +1,24 @@
-package com.pongchi.glimelight.service;
-
-import static org.assertj.core.api.Assertions.assertThat;
+package com.pongchi.glimelight.domain.member;
 
 import java.util.UUID;
 
-import org.junit.jupiter.api.Test;
+// import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.pongchi.glimelight.api.v1.dto.MemberRegisterRequestDto;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
-@SpringBootTest
-public class MemberServiceTest {
-    
-    private MemberService memberService;
+import static org.assertj.core.api.Assertions.assertThat;
 
+@RequiredArgsConstructor
+@Transactional
+@SpringBootTest
+public class MemberRepositoryTest {
+
+    private MemberRepository memberRepository;
+    
     // @Test
     public void 멤버_회원가입() {
         // given
@@ -26,7 +28,7 @@ public class MemberServiceTest {
         MemberRegisterRequestDto requestDto = new MemberRegisterRequestDto(email, password, nickname);
 
         // when
-        UUID newMemberId = memberService.register(requestDto);
+        UUID newMemberId = memberRepository.save(requestDto.toEntity()).getId();
 
         System.out.println("[유저_회원가입] 회원가입된 유저 ID : " + newMemberId );
 
