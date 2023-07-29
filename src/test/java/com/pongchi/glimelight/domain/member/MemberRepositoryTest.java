@@ -6,14 +6,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.pongchi.glimelight.api.v1.dto.MemberRegisterRequestDto;
+import com.pongchi.glimelight.api.v1.dto.member.MemberRegisterRequestDto;
 
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RequiredArgsConstructor
 @Transactional
 @SpringBootTest
 public class MemberRepositoryTest {

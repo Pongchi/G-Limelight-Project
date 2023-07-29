@@ -1,4 +1,4 @@
-package com.pongchi.glimelight.api.v1.dto;
+package com.pongchi.glimelight.api.v1.dto.member;
 
 import com.pongchi.glimelight.domain.member.Member;
 

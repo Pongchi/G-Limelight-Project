@@ -1,4 +1,4 @@
-package com.pongchi.glimelight.api.v1.dto;
+package com.pongchi.glimelight.api.v1.dto.member;
 
 import java.util.UUID;
 

@@ -2,14 +2,13 @@ package com.pongchi.glimelight.service;
 
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pongchi.glimelight.api.v1.dto.MemberDto;
-import com.pongchi.glimelight.api.v1.dto.MemberLoginRequestDto;
-import com.pongchi.glimelight.api.v1.dto.MemberLoginResponseDto;
-import com.pongchi.glimelight.api.v1.dto.MemberRegisterRequestDto;
+import com.pongchi.glimelight.api.v1.dto.member.MemberDto;
+import com.pongchi.glimelight.api.v1.dto.member.MemberLoginRequestDto;
+import com.pongchi.glimelight.api.v1.dto.member.MemberLoginResponseDto;
+import com.pongchi.glimelight.api.v1.dto.member.MemberRegisterRequestDto;
 import com.pongchi.glimelight.domain.member.Member;
 import com.pongchi.glimelight.domain.member.MemberRepository;
 
