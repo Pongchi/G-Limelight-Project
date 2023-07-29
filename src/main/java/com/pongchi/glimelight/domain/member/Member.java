@@ -11,6 +11,8 @@ import com.pongchi.glimelight.domain.subscribe.Subscribe;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -43,7 +45,9 @@ public class Member {
     @Column(length = 32, nullable = false)
     private String password;
 
-    private Role role;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role = Role.ROLE_USER;
 
     @Column(length = 32)
     private String nickname;

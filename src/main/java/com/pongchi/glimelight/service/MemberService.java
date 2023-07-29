@@ -2,6 +2,7 @@ package com.pongchi.glimelight.service;
 
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class MemberService {
 
+    @Autowired
     private MemberRepository memberRepository;
     
     @Transactional

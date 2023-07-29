@@ -28,4 +28,9 @@ public class MemberRegisterRequestDto {
                     .nickname(nickname)
                     .build();
     }
+
+    @Override
+    public String toString() {
+        return this.email + ", " + this.password + ", " + this.nickname;
+    }
 }

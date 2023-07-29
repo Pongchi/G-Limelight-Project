@@ -2,9 +2,11 @@ package com.pongchi.glimelight.api.v1;
 
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pongchi.glimelight.api.v1.dto.MemberDto;
@@ -19,11 +21,13 @@ import lombok.RequiredArgsConstructor;
 @RestController
 public class MemberController {
 
+    @Autowired
     private MemberService memberService;
     
     // 유저 회원가입 -> return 유저 ID
     @PostMapping("/api/v1/members")
-    public UUID register(MemberRegisterRequestDto requestDto) {
+    public UUID register(@RequestBody MemberRegisterRequestDto requestDto) {
+        System.out.println(requestDto);
         return memberService.register(requestDto);
     }
 
