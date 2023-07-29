@@ -19,8 +19,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class MemberService {
 
-    @Autowired
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
     
     @Transactional
     public UUID register(MemberRegisterRequestDto requestDto) {

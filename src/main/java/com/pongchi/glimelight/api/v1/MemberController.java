@@ -21,8 +21,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 public class MemberController {
 
-    @Autowired
-    private MemberService memberService;
+    private final MemberService memberService;
     
     // 유저 회원가입 -> return 유저 ID
     @PostMapping("/api/v1/members")
