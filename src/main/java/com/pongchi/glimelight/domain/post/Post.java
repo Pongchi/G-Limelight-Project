@@ -8,21 +8,25 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.pongchi.glimelight.domain.comment.Comment;
-import com.pongchi.glimelight.domain.game.Game;
+// import com.pongchi.glimelight.domain.game.Game;
 import com.pongchi.glimelight.domain.like.Like;
 import com.pongchi.glimelight.domain.member.Member;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 /*
     - id : long
@@ -40,6 +44,8 @@ import lombok.Getter;
     - modified_at : LocalDateTime 
  */
 @Getter
+@ToString
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 public class Post {
     
@@ -53,9 +59,9 @@ public class Post {
     @JoinColumn(name = "member_id")
     private Member writer;
 
-    @ManyToOne
-    @JoinColumn(name = "game_id")
-    private Game game;
+    // @ManyToOne
+    // @JoinColumn(name = "game_id")
+    // private Game game;
 
     @Column(length = 100, nullable = false)
     private String title;
@@ -67,19 +73,19 @@ public class Post {
     private String videoUrl;
 
     @ColumnDefault("0")
-    private int view_count;
+    private long view_count;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private ArrayList<Like> likes;
 
-    private int like_count;
+    private long like_count = 0;
 
     @OneToMany(mappedBy = "post")
     private ArrayList<Comment> comments;
 
-    @OneToMany(mappedBy = "post")
-    private ArrayList<PostHashTag> postHashTags;
+    // @OneToMany(mappedBy = "post")
+    // private ArrayList<PostHashTag> postHashTags;
 
     @CreatedDate
     @Column(updatable = false)
@@ -87,4 +93,19 @@ public class Post {
 
     @LastModifiedDate
     private LocalDateTime modifiedDate;
+
+    @Builder
+    public Post(Member writer, String title, String description, String videoUrl) {
+        this.writer = writer;
+        // this.game = game;
+        this.title = title;
+        this.description = description;
+        this.videoUrl = videoUrl;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Post other = (Post) obj;
+        return this.id == other.id;
+    }
 }

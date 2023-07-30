@@ -30,8 +30,6 @@ public class MemberRepositoryTest {
         // when
         UUID newMemberId = memberRepository.save(requestDto.toEntity()).getId();
 
-        System.out.println("[유저_회원가입] 회원가입된 유저 ID : " + newMemberId );
-
         // then
         assertThat(newMemberId).isNotNull();
     }

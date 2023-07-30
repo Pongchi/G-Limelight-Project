@@ -27,6 +27,6 @@ public class Game {
     @Column(length = 255)
     private String bannerUrl;
 
-    @OneToMany(mappedBy = "game")
-    private ArrayList<Post> posts;
+    // @OneToMany(mappedBy = "game")
+    // private ArrayList<Post> posts;
 }

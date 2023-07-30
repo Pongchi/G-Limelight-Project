@@ -19,6 +19,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 /*
     - id : UUID
@@ -30,6 +31,7 @@ import lombok.Getter;
  */
 
 @Getter
+@ToString(exclude = "password")
 @Entity
 public class Member {
     
