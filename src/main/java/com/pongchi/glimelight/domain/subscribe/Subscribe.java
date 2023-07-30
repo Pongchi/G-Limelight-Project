@@ -35,4 +35,10 @@ public class Subscribe {
     @ManyToOne
     @JoinColumn(name = "toMember")
     private Member toMember;
+
+    public Subscribe(Member fromMember, Member toMember) {
+        this.fromMember = fromMember;
+        this.toMember = toMember;
+    }
+
 }

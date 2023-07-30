@@ -1,10 +1,12 @@
 package com.pongchi.glimelight.domain.member;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.pongchi.glimelight.domain.BaseTimeEntity;
 import com.pongchi.glimelight.domain.comment.Comment;
 import com.pongchi.glimelight.domain.post.Post;
 import com.pongchi.glimelight.domain.subscribe.Subscribe;
@@ -33,7 +35,7 @@ import lombok.ToString;
 @Getter
 @ToString(exclude = "password")
 @Entity
-public class Member {
+public class Member extends BaseTimeEntity {
     
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -58,12 +60,12 @@ public class Member {
     private ArrayList<Post> posts;
 
     @OneToMany(mappedBy = "toMember", fetch = FetchType.LAZY)
-    private ArrayList<Subscribe> mySubscribes;
-    private long mySubscribes_count;
+    private List<Subscribe> mySubscribes = new ArrayList<>();
+    private Long mySubscribes_count = 0L;
 
     @OneToMany(mappedBy = "fromMember", fetch = FetchType.LAZY)
-    private ArrayList<Subscribe> otherSubscribes;
-    private long otherSubscribes_count;
+    private List<Subscribe> otherSubscribes = new ArrayList<>();;
+    private Long otherSubscribes_count = 0L;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private ArrayList<Comment> comments;
@@ -73,5 +75,15 @@ public class Member {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
+    }
+
+    public void addMySubscribe(Subscribe subscribe) {
+        mySubscribes.add(subscribe);
+        mySubscribes_count += 1L;
+    }
+
+    public void addOtherSubscribe(Subscribe subscribe) {
+        otherSubscribes.add(subscribe);
+        otherSubscribes_count += 1L;
     }
 }

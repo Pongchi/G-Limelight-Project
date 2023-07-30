@@ -11,9 +11,13 @@ public class MemberDto {
 
     private UUID id;
     private String nickname;
+    private long mySubscribes_count = 0;
+    private long otherSubscribes_count = 0;
 
     public MemberDto(Member member) {
         this.id = member.getId();
         this.nickname = member.getNickname();
+        this.mySubscribes_count = member.getMySubscribes_count();
+        this.otherSubscribes_count = member.getOtherSubscribes_count();
     }
 }

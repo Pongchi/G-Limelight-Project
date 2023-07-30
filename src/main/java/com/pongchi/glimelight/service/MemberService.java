@@ -25,7 +25,7 @@ public class MemberService {
         return memberRepository.save(requestDto.toEntity()).getId();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public MemberLoginResponseDto login(MemberLoginRequestDto requestDto) {
         Member member = memberRepository.login(requestDto.getEmail(), requestDto.getPassword()).get();
         return new MemberLoginResponseDto(member);

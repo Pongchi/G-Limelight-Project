@@ -1,15 +1,13 @@
 package com.pongchi.glimelight.domain.post;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.pongchi.glimelight.domain.BaseTimeEntity;
 import com.pongchi.glimelight.domain.comment.Comment;
 // import com.pongchi.glimelight.domain.game.Game;
 import com.pongchi.glimelight.domain.like.Like;
@@ -47,7 +45,7 @@ import lombok.ToString;
 @ToString
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Post {
+public class Post extends BaseTimeEntity {
     
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -86,13 +84,6 @@ public class Post {
 
     // @OneToMany(mappedBy = "post")
     // private ArrayList<PostHashTag> postHashTags;
-
-    @CreatedDate
-    @Column(updatable = false)
-    private LocalDateTime createdDate;
-
-    @LastModifiedDate
-    private LocalDateTime modifiedDate;
 
     @Builder
     public Post(Member writer, String title, String description, String videoUrl) {
