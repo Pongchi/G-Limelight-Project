@@ -44,4 +44,30 @@ public class PostService {
                 .videoUrl(post.getVideoUrl()).build());
 
     }
+
+    public PostResponseDto read(UUID id) {
+        Post post = postRepository.findById(id).get();
+        return PostResponseDto.builder()
+                .id(id)
+                .writerId(post.getWriter().getId())
+                .title(post.getTitle())
+                .description(post.getDescription())
+                .videoUrl(post.getVideoUrl())
+                .build();
+    }
+
+    public PostResponseDto delete(UUID id) {
+        Post post = postRepository.findById(id).get();
+
+        postRepository.delete(post);
+
+        return PostResponseDto.builder()
+                .id(id)
+                .writerId(post.getWriter().getId())
+                .title(post.getTitle())
+                .description(post.getDescription())
+                .videoUrl(post.getVideoUrl())
+                .build();
+    }
+
 }

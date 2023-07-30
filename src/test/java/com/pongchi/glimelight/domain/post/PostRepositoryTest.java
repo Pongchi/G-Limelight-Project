@@ -2,6 +2,8 @@ package com.pongchi.glimelight.domain.post;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -59,6 +61,39 @@ public class PostRepositoryTest {
         // then
         assertThat(postList.getContent().size()).isEqualTo(10);
         // postList.forEach(System.out::println);
+    }
+
+    @Test
+    public void 게시글_하나_불러오기() {
+        // given
+        Member writer = new Member("test@test.com", "test", "test");
+        memberRepository.save(writer);
+
+        Post post = new Post(writer, "test", "test", "http://test.test");
+        Post savedPost = postRepository.save(post);
+
+        // when
+        Post findedPost = postRepository.findById(savedPost.getId()).get();
+
+        // then
+        assertThat(findedPost).isEqualTo(findedPost);
+    }
+
+    @Test
+    public void 게시글_삭제() {
+        // given
+        Member writer = new Member("test@test.com", "test", "test");
+        memberRepository.save(writer);
+
+        Post post = new Post(writer, "test", "test", "http://test.test");
+        Post savedPost = postRepository.save(post);
+
+        // when
+        postRepository.delete(savedPost);
+        List<Post> findedPosts = postRepository.findAll();
+
+        // then
+        assertThat(findedPosts.size()).isEqualTo(0);
     }
     
 }
