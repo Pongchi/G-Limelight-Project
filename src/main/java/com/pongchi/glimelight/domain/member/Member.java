@@ -22,6 +22,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /*
@@ -35,6 +36,7 @@ import lombok.ToString;
 
 @Getter
 @ToString(exclude = "password")
+@NoArgsConstructor
 @Entity
 public class Member extends BaseTimeEntity {
     
@@ -58,7 +60,7 @@ public class Member extends BaseTimeEntity {
     private String nickname;
 
     @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY)
-    private ArrayList<Post> posts;
+    private List<Post> posts;
 
     @OneToMany(mappedBy = "toMember", fetch = FetchType.LAZY)
     private List<Subscribe> mySubscribes = new ArrayList<>();

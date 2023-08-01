@@ -1,6 +1,6 @@
 package com.pongchi.glimelight.domain.post;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,6 +22,6 @@ public class Hashtag {
     private String tag;
 
     @OneToMany(mappedBy = "hashtag")
-    private ArrayList<PostHashTag> postHashTag;
+    private List<PostHashTag> postHashTag;
     
 }
