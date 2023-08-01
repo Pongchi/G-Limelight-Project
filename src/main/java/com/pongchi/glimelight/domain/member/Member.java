@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.pongchi.glimelight.domain.BaseTimeEntity;
 import com.pongchi.glimelight.domain.comment.Comment;
+import com.pongchi.glimelight.domain.like.Like;
 import com.pongchi.glimelight.domain.post.Post;
 import com.pongchi.glimelight.domain.subscribe.Subscribe;
 
@@ -68,7 +69,10 @@ public class Member extends BaseTimeEntity {
     private Long otherSubscribes_count = 0L;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    private ArrayList<Comment> comments;
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Like> likes;
 
     @Builder
     public Member(String email, String password, String nickname) {
@@ -85,5 +89,15 @@ public class Member extends BaseTimeEntity {
     public void addOtherSubscribe(Subscribe subscribe) {
         otherSubscribes.add(subscribe);
         otherSubscribes_count += 1L;
+    }
+
+    public void subMySubscribe(Subscribe subscribe) {
+        mySubscribes.remove(subscribe);
+        mySubscribes_count -= 1L;
+    }
+
+    public void subOtherSubscribe(Subscribe subscribe) {
+        otherSubscribes.remove(subscribe);
+        otherSubscribes_count -= 1L;
     }
 }

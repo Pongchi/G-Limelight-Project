@@ -1,6 +1,7 @@
 package com.pongchi.glimelight.domain.post;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.ColumnDefault;
@@ -73,14 +74,13 @@ public class Post extends BaseTimeEntity {
     @ColumnDefault("0")
     private long view_count;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    private ArrayList<Like> likes;
+    @OneToMany(mappedBy = "post" ,fetch = FetchType.LAZY)
+    private List<Like> likes = new ArrayList<Like>();
 
     private long like_count = 0;
 
     @OneToMany(mappedBy = "post")
-    private ArrayList<Comment> comments;
+    private List<Comment> comments;
 
     // @OneToMany(mappedBy = "post")
     // private ArrayList<PostHashTag> postHashTags;
@@ -98,5 +98,15 @@ public class Post extends BaseTimeEntity {
     public boolean equals(Object obj) {
         Post other = (Post) obj;
         return this.id == other.id;
+    }
+
+    public void addLike(Like like) {
+        likes.add(like);
+        like_count++;
+    }
+
+    public void subLike(Like like) {
+        likes.remove(like);
+        like_count--;
     }
 }

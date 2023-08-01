@@ -69,15 +69,30 @@ public class SubscribeRepositoryTest {
         // then
         Member savedFromMember = memberRepository.findById(fromMember.getId()).get();
         Member savedToMember = memberRepository.findById(toMember.getId()).get();
-        Subscribe savedSubscribe1 = subscribeRepository.findAll().get(1);
-        Subscribe savedSubscribe2 = subscribeRepository.findAll().get(0);
+        Subscribe savedSubscribe = subscribeRepository.findAll().get(1);
 
         assertThat(savedFromMember.getMySubscribes_count()).isEqualTo(1L);
         assertThat(savedToMember.getOtherSubscribes_count()).isEqualTo(1L);
-        assertThat(savedSubscribe1.getFromMember().getId()).isEqualTo(fromMember.getId());
-        assertThat(savedSubscribe1.getToMember().getId()).isEqualTo(toMember.getId());
+        assertThat(savedSubscribe.getFromMember().getId()).isEqualTo(fromMember.getId());
+        assertThat(savedSubscribe.getToMember().getId()).isEqualTo(toMember.getId());
+    }
 
-        assertThat(savedSubscribe2.getFromMember().getId()).isEqualTo(toMember.getId());
-        assertThat(savedSubscribe2.getToMember().getId()).isEqualTo(fromMember.getId());
+    @Test
+    public void 구독체크() {
+        // given
+        Member fromMember = new Member("fromTest@test.com", "test", "test");
+        Member toMember = new Member("toTest@test.com", "test", "test");
+        memberRepository.save(fromMember);
+        memberRepository.save(toMember);
+
+        Subscribe subscribe = new Subscribe(fromMember, toMember);
+        subscribeRepository.save(subscribe);
+
+        // when
+        Subscribe savedSubscribe = subscribeRepository.findByFromMemberAndToMember(fromMember, toMember).get();
+
+        // then
+        assertThat(savedSubscribe.getFromMember().getId()).inBinary().isEqualTo(fromMember.getId());
+        assertThat(savedSubscribe.getToMember().getId()).inBinary().isEqualTo(toMember.getId());
     }
 }
