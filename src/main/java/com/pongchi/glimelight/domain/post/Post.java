@@ -25,6 +25,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /*
@@ -43,6 +44,7 @@ import lombok.ToString;
     - modified_at : LocalDateTime 
  */
 @Getter
+@NoArgsConstructor
 @ToString
 @EntityListeners(AuditingEntityListener.class)
 @Entity
