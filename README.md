@@ -1,2 +1,2 @@
-# G-Limelight-Project-Backend
-G-Limelight-Project
+# Limelight-Project-Backend
+Limelight-Project
