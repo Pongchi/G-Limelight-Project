@@ -1,5 +1,10 @@
 package com.pongchi.glimelight.domain.subscribe;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Iterator;
+
+import org.hibernate.mapping.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -7,8 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pongchi.glimelight.domain.member.Member;
 import com.pongchi.glimelight.domain.member.MemberRepository;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @Transactional
 @SpringBootTest
@@ -45,7 +48,7 @@ public class SubscribeRepositoryTest {
         assertThat(savedSubscribe.getFromMember().getId()).isEqualTo(fromMember.getId());
         assertThat(savedSubscribe.getToMember().getId()).isEqualTo(toMember.getId());
     }
-
+    
     @Test
     public void 양반향_구독() {
         // given
@@ -69,12 +72,13 @@ public class SubscribeRepositoryTest {
         // then
         Member savedFromMember = memberRepository.findById(fromMember.getId()).get();
         Member savedToMember = memberRepository.findById(toMember.getId()).get();
-        Subscribe savedSubscribe = subscribeRepository.findAll().get(1);
+        Subscribe savedSubscribe = subscribeRepository.findAll().get(0);
 
         assertThat(savedFromMember.getMySubscribes_count()).isEqualTo(1L);
         assertThat(savedToMember.getOtherSubscribes_count()).isEqualTo(1L);
-        assertThat(savedSubscribe.getFromMember().getId()).isEqualTo(fromMember.getId());
-        assertThat(savedSubscribe.getToMember().getId()).isEqualTo(toMember.getId());
+
+        assertThat(savedSubscribe.getFromMember().getMySubscribes().size()).isEqualTo(1L);
+        assertThat(savedSubscribe.getToMember().getOtherSubscribes().size()).isEqualTo(1L);
     }
 
     @Test
