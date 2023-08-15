@@ -19,6 +19,13 @@ public class SecurityConfig {
                 .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
             .csrf((csrf) -> csrf
                 .ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**")))
+            .formLogin((formLogin) -> formLogin
+                .loginPage("/api/v1/members/login")
+                .defaultSuccessUrl("/"))
+            .logout((logout) -> logout
+                .logoutRequestMatcher(new AntPathRequestMatcher("/api/v1/members/logout"))
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true))
         ;
         return http.build();
     }
