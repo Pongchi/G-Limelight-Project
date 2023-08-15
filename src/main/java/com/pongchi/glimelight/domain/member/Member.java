@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.pongchi.glimelight.domain.BaseTimeEntity;
 import com.pongchi.glimelight.domain.comment.Comment;
@@ -80,8 +81,9 @@ public class Member extends BaseTimeEntity {
 
     @Builder
     public Member(String email, String password, String nickname) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         this.email = email;
-        this.password = password;
+        this.password = passwordEncoder.encode(password);
         this.nickname = nickname;
     }
 

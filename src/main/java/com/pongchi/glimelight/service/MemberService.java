@@ -2,6 +2,7 @@ package com.pongchi.glimelight.service;
 
 import java.util.UUID;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,9 +20,13 @@ import lombok.RequiredArgsConstructor;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
     
     @Transactional
     public UUID register(MemberRegisterRequestDto requestDto) {
+        requestDto.setPassword(
+            passwordEncoder.encode(requestDto.getPassword())
+        );
         return memberRepository.save(requestDto.toEntity()).getId();
     }
 

@@ -21,16 +21,15 @@ public class MemberRegisterRequestDto {
         this.nickname = nickname;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Member toEntity() {
         return Member.builder()
                     .email(email)
                     .password(password)
                     .nickname(nickname)
                     .build();
-    }
-
-    @Override
-    public String toString() {
-        return this.email + ", " + this.password + ", " + this.nickname;
     }
 }
