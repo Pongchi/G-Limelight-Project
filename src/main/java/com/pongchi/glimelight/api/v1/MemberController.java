@@ -35,7 +35,7 @@ public class MemberController {
 
     // 유저 로그인 - GET 메소드를 써야할 것 같지만 보안상의 이유로 POST
     @PostMapping("/api/v1/members/login")
-    public MemberLoginResponseDto login(@RequestBody MemberLoginRequestDto requestDto) {
+    public MemberLoginResponseDto login(@RequestBody MemberLoginRequestDto requestDto) throws Exception {
         return memberService.login(requestDto);
     }
 }

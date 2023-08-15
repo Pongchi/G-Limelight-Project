@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.pongchi.glimelight.domain.BaseTimeEntity;
 import com.pongchi.glimelight.domain.comment.Comment;
@@ -21,7 +20,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -51,8 +49,7 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     private String email;
 
-    @Getter(AccessLevel.NONE)
-    @Column(length = 32, nullable = false)
+    @Column(length = 60, nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -81,9 +78,8 @@ public class Member extends BaseTimeEntity {
 
     @Builder
     public Member(String email, String password, String nickname) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         this.email = email;
-        this.password = passwordEncoder.encode(password);
+        this.password = password;
         this.nickname = nickname;
     }
 

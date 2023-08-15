@@ -38,7 +38,7 @@ public class MemberServiceTest {
     }
 
     @Test
-    public void 로그인() {
+    public void 로그인() throws Exception {
         // given
         String email = "test@gmail.com";
         String password = "test";
