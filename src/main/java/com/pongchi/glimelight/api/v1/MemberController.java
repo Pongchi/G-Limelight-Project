@@ -2,6 +2,7 @@ package com.pongchi.glimelight.api.v1;
 
 import java.util.UUID;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,28 +24,31 @@ public class MemberController {
     
     // 유저 회원가입 -> return 유저 ID
     @PostMapping("/api/v1/members")
-    public UUID register(String email, String password, String nickname) {
+    public ResponseEntity<UUID> register(String email, String password, String nickname) {
         MemberRegisterRequestDto requestDto = MemberRegisterRequestDto.builder()
                 .email(email)
                 .password(password)
                 .nickname(nickname)
                 .build();
 
-        return memberService.register(requestDto);
+        return ResponseEntity.ok()
+                .body(memberService.register(requestDto));
     }
 
     @GetMapping("/api/v1/members/{id}")
-    public MemberDto findById(@PathVariable("id") UUID id) {
-        return memberService.findById(id);
+    public ResponseEntity<MemberDto> findById(@PathVariable("id") UUID id) {
+        return ResponseEntity.ok()
+                .body(memberService.findById(id));
     }
 
     // 유저 로그인 - GET 메소드를 써야할 것 같지만 보안상의 이유로 POST
     @PostMapping("/api/v1/members/login")
-    public MemberLoginResponseDto login(String email, String password) throws Exception {
+    public ResponseEntity<MemberLoginResponseDto> login(String email, String password) throws Exception {
         MemberLoginRequestDto requestDto = MemberLoginRequestDto.builder()
                 .email(email)
                 .password(password)
                 .build();
-        return memberService.login(requestDto);
+        return ResponseEntity.ok()
+                .body(memberService.login(requestDto));
     }
 }
