@@ -18,11 +18,15 @@ public class SecurityConfig {
             .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                 .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
             .csrf((csrf) -> csrf
-                .ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**")))
+                .ignoringRequestMatchers(new AntPathRequestMatcher("/**")))
             .formLogin((formLogin) -> formLogin
-                .loginPage("/api/v1/members/login")
-                .defaultSuccessUrl("/"))
+                .permitAll()
+                .defaultSuccessUrl("https://laughing-guacamole-6w4pp7wwv49h46r6-3000.app.github.dev/"))
             .logout((logout) -> logout
+                .permitAll()
+                .deleteCookies("JSESSIONID")
+                .invalidateHttpSession(true)
+				.clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/api/v1/members/logout"))
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true))
