@@ -2,7 +2,6 @@ package com.pongchi.glimelight.api.v1;
 
 import java.util.UUID;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,10 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pongchi.glimelight.api.v1.dto.ResponseDto;
+import com.pongchi.glimelight.api.v1.dto.ResponsesDto;
 import com.pongchi.glimelight.api.v1.dto.member.MemberDto;
 import com.pongchi.glimelight.api.v1.dto.member.MemberLoginRequestDto;
 import com.pongchi.glimelight.api.v1.dto.member.MemberLoginResponseDto;
 import com.pongchi.glimelight.api.v1.dto.member.MemberRegisterRequestDto;
+import com.pongchi.glimelight.common.ResponseCode;
 import com.pongchi.glimelight.service.MemberService;
 
 import jakarta.validation.Valid;
@@ -25,15 +27,20 @@ public class MemberController {
 
     private final MemberService memberService;
     
-    // 유저 회원가입 -> return 유저 ID
     @PostMapping("/api/v1/members")
-    public ResponseEntity register(@Valid MemberRegisterRequestDto requestDto, BindingResult bindingResult) {
+    public ResponseEntity<?> register(@Valid MemberRegisterRequestDto requestDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getAllErrors());
+            return ResponsesDto.createResponseEntity(
+                ResponseCode.INVALID_PARAMETER, 
+                bindingResult.getAllErrors().toArray()
+            );
         }
 
-        return ResponseEntity.ok()
-                .body(memberService.register(requestDto));
+        UUID uuid = memberService.register(requestDto);
+        return ResponseDto.createResponseEntity(
+            ResponseCode.SUCCESS,
+            uuid
+        );
     }
 
     @GetMapping("/api/v1/members/{id}")
