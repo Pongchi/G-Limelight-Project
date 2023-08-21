@@ -31,11 +31,10 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    public MemberLoginResponseDto login(MemberLoginRequestDto requestDto) throws Exception {
+    public MemberLoginResponseDto login(MemberLoginRequestDto requestDto) {
         Member member = memberRepository.findByEmail(requestDto.getEmail()).get();
 
         if (!passwordEncoder.matches(requestDto.getPassword(), member.getPassword())) {
-            throw new Exception("로그인 실패");
         }
         return new MemberLoginResponseDto(member);
     }
