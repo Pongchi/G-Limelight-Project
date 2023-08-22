@@ -19,6 +19,8 @@ import com.pongchi.glimelight.api.v1.dto.post.PostCreateRequestDto;
 import com.pongchi.glimelight.common.ResponseCode;
 import com.pongchi.glimelight.service.PostService;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -28,7 +30,7 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/api/v1/posts")
-    public ResponseEntity<?> create(@RequestBody PostCreateRequestDto requestDto, BindingResult bindingResult) {
+    public ResponseEntity<?> create(@Valid @RequestBody PostCreateRequestDto requestDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return createResponsesEntity(
                 ResponseCode.INVALID_PARAMETER, 
@@ -43,14 +45,7 @@ public class PostController {
     }
 
     @GetMapping("/api/v1/posts")
-    public ResponseEntity<?> postListAll(Pageable pageable, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return createResponsesEntity(
-                ResponseCode.INVALID_PARAMETER, 
-                bindingResult.getAllErrors()
-            );
-        }
-
+    public ResponseEntity<?> postListAll(Pageable pageable) {
         return createResponsesEntity(
             ResponseCode.SUCCESS,
             postService.findAll(pageable).getContent()
@@ -58,7 +53,7 @@ public class PostController {
     }
 
     @GetMapping("/api/v1/posts/{id}")
-    public ResponseEntity<?> read(@PathVariable("id") UUID id, BindingResult bindingResult) {
+    public ResponseEntity<?> read(@NotBlank @PathVariable("id") UUID id, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return createResponsesEntity(
                 ResponseCode.INVALID_PARAMETER, 
@@ -73,7 +68,7 @@ public class PostController {
     }
 
     @DeleteMapping("/api/v1/posts/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") UUID id, BindingResult bindingResult) {
+    public ResponseEntity<?> delete(@NotBlank @PathVariable("id") UUID id, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return createResponsesEntity(
                 ResponseCode.INVALID_PARAMETER, 
