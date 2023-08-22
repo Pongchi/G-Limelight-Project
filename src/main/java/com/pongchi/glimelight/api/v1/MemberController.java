@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pongchi.glimelight.api.v1.dto.ResponseDto;
-import com.pongchi.glimelight.api.v1.dto.ResponsesDto;
+import static com.pongchi.glimelight.api.v1.dto.ResponseDto.createResponseEntity;
+import static com.pongchi.glimelight.api.v1.dto.ResponsesDto.createResponsesEntity;
 import com.pongchi.glimelight.api.v1.dto.member.MemberLoginRequestDto;
 import com.pongchi.glimelight.api.v1.dto.member.MemberRegisterRequestDto;
 import com.pongchi.glimelight.common.ResponseCode;
@@ -28,14 +28,14 @@ public class MemberController {
     @PostMapping("/api/v1/members")
     public ResponseEntity<?> register(@Valid MemberRegisterRequestDto requestDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return ResponsesDto.createResponseEntity(
+            return createResponsesEntity(
                 ResponseCode.INVALID_PARAMETER, 
-                bindingResult.getAllErrors().toArray()
+                bindingResult.getAllErrors()
             );
         }
 
         UUID uuid = memberService.register(requestDto);
-        return ResponseDto.createResponseEntity(
+        return createResponseEntity(
             ResponseCode.SUCCESS,
             uuid
         );
@@ -43,7 +43,7 @@ public class MemberController {
 
     @GetMapping("/api/v1/members/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") UUID id) {
-        return ResponseDto.createResponseEntity(
+        return createResponseEntity(
             ResponseCode.SUCCESS,
             memberService.findById(id)
         );
@@ -51,7 +51,7 @@ public class MemberController {
 
     @PostMapping("/api/v1/members/login")
     public ResponseEntity<?> login(@Valid MemberLoginRequestDto requestDto, BindingResult bindingResult) {
-        return ResponseDto.createResponseEntity(
+        return createResponseEntity(
             ResponseCode.SUCCESS,
             memberService.login(requestDto)
         );
