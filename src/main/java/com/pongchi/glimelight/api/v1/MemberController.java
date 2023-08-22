@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pongchi.glimelight.api.v1.dto.ResponseDto;
 import com.pongchi.glimelight.api.v1.dto.ResponsesDto;
-import com.pongchi.glimelight.api.v1.dto.member.MemberDto;
 import com.pongchi.glimelight.api.v1.dto.member.MemberLoginRequestDto;
-import com.pongchi.glimelight.api.v1.dto.member.MemberLoginResponseDto;
 import com.pongchi.glimelight.api.v1.dto.member.MemberRegisterRequestDto;
 import com.pongchi.glimelight.common.ResponseCode;
 import com.pongchi.glimelight.service.MemberService;
@@ -44,14 +42,18 @@ public class MemberController {
     }
 
     @GetMapping("/api/v1/members/{id}")
-    public ResponseEntity<MemberDto> findById(@PathVariable("id") UUID id) {
-        return ResponseEntity.ok()
-                .body(memberService.findById(id));
+    public ResponseEntity<?> findById(@PathVariable("id") UUID id) {
+        return ResponseDto.createResponseEntity(
+            ResponseCode.SUCCESS,
+            memberService.findById(id)
+        );
     }
 
     @PostMapping("/api/v1/members/login")
-    public ResponseEntity<MemberLoginResponseDto> login(@Valid MemberLoginRequestDto requestDto, BindingResult bindingResult) {
-        return ResponseEntity.ok()
-                .body(memberService.login(requestDto));
+    public ResponseEntity<?> login(@Valid MemberLoginRequestDto requestDto, BindingResult bindingResult) {
+        return ResponseDto.createResponseEntity(
+            ResponseCode.SUCCESS,
+            memberService.login(requestDto)
+        );
     }
 }
