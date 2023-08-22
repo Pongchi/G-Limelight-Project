@@ -17,6 +17,7 @@ import com.pongchi.glimelight.common.ResponseCode;
 import com.pongchi.glimelight.service.MemberService;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -42,7 +43,14 @@ public class MemberController {
     }
 
     @GetMapping("/api/v1/members/{id}")
-    public ResponseEntity<?> findById(@PathVariable("id") UUID id) {
+    public ResponseEntity<?> findById(@NotBlank @PathVariable("id") UUID id, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return createResponsesEntity(
+                ResponseCode.INVALID_PARAMETER, 
+                bindingResult.getAllErrors()
+            );
+        }
+
         return createResponseEntity(
             ResponseCode.SUCCESS,
             memberService.findById(id)
@@ -51,6 +59,13 @@ public class MemberController {
 
     @PostMapping("/api/v1/members/login")
     public ResponseEntity<?> login(@Valid MemberLoginRequestDto requestDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return createResponsesEntity(
+                ResponseCode.INVALID_PARAMETER, 
+                bindingResult.getAllErrors()
+            );
+        }
+        
         return createResponseEntity(
             ResponseCode.SUCCESS,
             memberService.login(requestDto)
