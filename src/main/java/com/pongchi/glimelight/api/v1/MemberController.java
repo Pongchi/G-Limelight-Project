@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import static com.pongchi.glimelight.api.v1.dto.ResponseDto.createResponseEntity;
@@ -27,7 +28,7 @@ public class MemberController {
     private final MemberService memberService;
     
     @PostMapping("/api/v1/members")
-    public ResponseEntity<?> register(@Valid MemberRegisterRequestDto requestDto, BindingResult bindingResult) {
+    public ResponseEntity<?> register(@Valid @RequestBody MemberRegisterRequestDto requestDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return createResponsesEntity(
                 ResponseCode.INVALID_PARAMETER, 
@@ -58,7 +59,7 @@ public class MemberController {
     }
 
     @PostMapping("/api/v1/members/login")
-    public ResponseEntity<?> login(@Valid MemberLoginRequestDto requestDto, BindingResult bindingResult) {
+    public ResponseEntity<?> login(@Valid @RequestBody MemberLoginRequestDto requestDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return createResponsesEntity(
                 ResponseCode.INVALID_PARAMETER, 
