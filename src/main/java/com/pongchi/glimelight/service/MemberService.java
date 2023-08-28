@@ -2,6 +2,9 @@ package com.pongchi.glimelight.service;
 
 import java.util.UUID;
 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +17,7 @@ import com.pongchi.glimelight.common.ResponseCode;
 import com.pongchi.glimelight.domain.member.Member;
 import com.pongchi.glimelight.domain.member.MemberRepository;
 import com.pongchi.glimelight.exception.CustomException;
+import com.pongchi.glimelight.jwt.JwtTokenProvider;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +27,8 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final AuthenticationManager authenticationManager;
     
     @Transactional
     public UUID register(MemberRegisterRequestDto requestDto) {
@@ -43,7 +49,14 @@ public class MemberService {
             throw new CustomException(ResponseCode.UNAUTHORIZATION_FAIL);
         }
 
-        return new MemberLoginResponseDto(member);
+        Authentication authentication = authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(
+                requestDto.getEmail(),
+                requestDto.getPassword()
+            )
+        );
+        String access_token = jwtTokenProvider.generateToken(authentication);
+        return new MemberLoginResponseDto(access_token);
     }
 
     @Transactional(readOnly = true)
