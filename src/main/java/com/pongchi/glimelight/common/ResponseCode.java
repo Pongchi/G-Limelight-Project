@@ -9,13 +9,15 @@ public enum ResponseCode {
     // 성공
     SUCCESS(200, "OK"),
 
-    //400 BAD_REQUEST 잘못된 요청
+    //400 BAD REQUEST 잘못된 요청
     INVALID_PARAMETER(400, "파라미터 값을 확인해주세요."),
-    NOT_FOUNDED_PARAMETER(400, "필요한 파라미터 값을 확인해주세요."),
+    NOT_FOUND_PARAMETER(400, "필요한 파라미터 값을 확인해주세요."),
 
-    // 컨트롤러에 없는 경로
+    // 404 NOT FOUND
     INVALID_PATH(404, "잘못된 경로입니다."),
-    NOT_FOUNDED_MEMBER(404, "멤버를 찾을 수 없습니다."),
+    NOT_FOUND_MEMBER(404, "멤버를 찾을 수 없습니다."),
+    NOT_FOUND_POST(404, "게시글을 찾을 수 없습니다."),
+    NOT_FOUND_COMMENT(404, "댓글을 찾을 수 없습니다."),
 
     //500 INTERNAL SERVER ERROR
     INTERNAL_SERVER_ERROR(

@@ -30,7 +30,7 @@ public class CustomExceptionHandler {
     @ExceptionHandler({ MissingServletRequestParameterException.class })
     private ResponseEntity<?> notFoundedParameterException(Exception ex) {
         return ResponseDto.createResponseEntity(
-            ResponseCode.NOT_FOUNDED_PARAMETER,
+            ResponseCode.NOT_FOUND_PARAMETER,
             null
         );
     }
@@ -38,7 +38,7 @@ public class CustomExceptionHandler {
     @ExceptionHandler({ NoHandlerFoundException.class })
     private ResponseEntity<?> invalidPathException(Exception ex) {
         return ResponseDto.createResponseEntity(
-            ResponseCode.NOT_FOUNDED_PARAMETER,
+            ResponseCode.NOT_FOUND_PARAMETER,
             null
         );
     }

@@ -38,7 +38,7 @@ public class MemberService {
         Optional<Member> member = memberRepository.findByEmail(requestDto.getEmail());
         
         if (member.isEmpty()) {
-            throw new CustomException(ResponseCode.NOT_FOUNDED_MEMBER);
+            throw new CustomException(ResponseCode.NOT_FOUND_MEMBER);
         }
 
         if (!passwordEncoder.matches(requestDto.getPassword(), member.get().getPassword())) {
@@ -51,7 +51,7 @@ public class MemberService {
         Optional<Member> member = memberRepository.findById(id);
 
         if (member.isEmpty()) {
-            throw new CustomException(ResponseCode.NOT_FOUNDED_MEMBER);
+            throw new CustomException(ResponseCode.NOT_FOUND_MEMBER);
         }
         return new MemberDto(member.get());
     }
