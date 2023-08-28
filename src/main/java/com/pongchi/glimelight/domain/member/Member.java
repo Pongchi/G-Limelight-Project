@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.pongchi.glimelight.domain.BaseTimeEntity;
 import com.pongchi.glimelight.domain.comment.Comment;
@@ -103,4 +104,9 @@ public class Member extends BaseTimeEntity {
         otherSubscribes.remove(subscribe);
         otherSubscribes_count -= 1L;
     }
+
+    public Member hashPassword(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(this.password);
+    return this;
+  }
 }

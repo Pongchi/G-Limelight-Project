@@ -1,0 +1,4 @@
+jwt:
+  token:
+    secret-key: bZSv3mQU9DTqmqyKuvozGo5NgA0AirKA
+    expire-length: 300000

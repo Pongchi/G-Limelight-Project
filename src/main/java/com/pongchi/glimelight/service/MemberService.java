@@ -1,6 +1,5 @@
 package com.pongchi.glimelight.service;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,10 +26,10 @@ public class MemberService {
     
     @Transactional
     public UUID register(MemberRegisterRequestDto requestDto) {
-        requestDto.setPassword(
-            passwordEncoder.encode(requestDto.getPassword())
-        );
-        return memberRepository.save(requestDto.toEntity()).getId();
+        Member member = requestDto.toEntity();
+        member.hashPassword(passwordEncoder);
+
+        return memberRepository.save(member).getId();
     }
 
     @Transactional(readOnly = true)
@@ -41,17 +40,18 @@ public class MemberService {
             );
 
         if (!passwordEncoder.matches(requestDto.getPassword(), member.getPassword())) {
+            throw new CustomException(ResponseCode.UNAUTHORIZATION_FAIL);
         }
+
         return new MemberLoginResponseDto(member);
     }
 
     @Transactional(readOnly = true)
     public MemberDto findById(UUID id) {
-        Optional<Member> member = memberRepository.findById(id);
-
-        if (member.isEmpty()) {
-            throw new CustomException(ResponseCode.NOT_FOUND_MEMBER);
-        }
-        return new MemberDto(member.get());
+        Member member = memberRepository.findById(id)
+            .orElseThrow(
+                () -> new CustomException(ResponseCode.NOT_FOUND_MEMBER)
+            );
+        return new MemberDto(member);
     }
 }
