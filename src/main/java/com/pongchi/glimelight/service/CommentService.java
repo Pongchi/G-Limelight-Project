@@ -1,7 +1,6 @@
 package com.pongchi.glimelight.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -35,18 +34,20 @@ public class CommentService {
 
     @Transactional
     public Comment create(CommentCreationDto requestDto) {
-        Optional<Post> post = postRepository.findById(requestDto.getPostId());
-        if (post.isEmpty()) {
-            throw new CustomException(ResponseCode.NOT_FOUND_POST);
-        }
-        Optional<Member> member = memberRepository.findById(requestDto.getMemberId());
-        if (member.isEmpty()) {
-            throw new CustomException(ResponseCode.NOT_FOUND_MEMBER);
-        }
+        Post post = postRepository.findById(requestDto.getPostId())
+            .orElseThrow(
+                () -> new CustomException(ResponseCode.NOT_FOUND_POST)
+            );
+
+        Member member = memberRepository.findById(requestDto.getMemberId())
+            .orElseThrow(
+                () -> new CustomException(ResponseCode.NOT_FOUND_MEMBER)
+            );
+
 
         Comment comment = Comment.builder()
-                .member(member.get())
-                .post(post.get())
+                .member(member)
+                .post(post)
                 .message(requestDto.getMessage())
                 .build();
         return commentRepository.save(comment);
@@ -54,11 +55,11 @@ public class CommentService {
 
     @Transactional
     public Comment delete(UUID id) {
-        Optional<Comment> comment = commentRepository.findById(id);
-        if (comment.isEmpty()) {
-            throw new CustomException(ResponseCode.NOT_FOUND_COMMENT);
-        }
-        commentRepository.delete(comment.get());
-        return comment.get();
+        Comment comment = commentRepository.findById(id)
+            .orElseThrow(
+                () -> new CustomException(ResponseCode.NOT_FOUND_COMMENT)
+            );
+        commentRepository.delete(comment);
+        return comment;
     }
 }

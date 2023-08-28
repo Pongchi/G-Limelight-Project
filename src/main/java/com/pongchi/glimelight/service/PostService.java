@@ -9,10 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pongchi.glimelight.api.v1.dto.post.PostCreateRequestDto;
 import com.pongchi.glimelight.api.v1.dto.post.PostResponseDto;
+import com.pongchi.glimelight.common.ResponseCode;
 import com.pongchi.glimelight.domain.member.Member;
 import com.pongchi.glimelight.domain.member.MemberRepository;
 import com.pongchi.glimelight.domain.post.Post;
 import com.pongchi.glimelight.domain.post.PostRepository;
+import com.pongchi.glimelight.exception.CustomException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,7 +27,10 @@ public class PostService {
 
     @Transactional
     public UUID create(PostCreateRequestDto requestDto) {
-        Member writer = memberRepository.findById(requestDto.getWriterId()).get();
+        Member writer = memberRepository.findById(requestDto.getWriterId())
+            .orElseThrow(
+                () -> new CustomException(ResponseCode.NOT_FOUND_MEMBER)
+            );
         Post post = Post.builder()
                         .writer(writer)
                         .title(requestDto.getTitle())
@@ -50,7 +55,10 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public PostResponseDto read(UUID id) {
-        Post post = postRepository.findById(id).get();
+        Post post = postRepository.findById(id)
+            .orElseThrow(
+                () -> new CustomException(ResponseCode.NOT_FOUND_POST)
+            );
         return PostResponseDto.builder()
                 .id(id)
                 .writerId(post.getWriter().getId())
@@ -61,7 +69,10 @@ public class PostService {
     }
 
     public PostResponseDto delete(UUID id) {
-        Post post = postRepository.findById(id).get();
+        Post post = postRepository.findById(id)
+            .orElseThrow(
+                () -> new CustomException(ResponseCode.NOT_FOUND_POST)
+            );
 
         postRepository.delete(post);
 

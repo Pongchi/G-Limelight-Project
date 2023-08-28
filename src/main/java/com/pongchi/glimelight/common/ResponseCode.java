@@ -18,6 +18,8 @@ public enum ResponseCode {
     NOT_FOUND_MEMBER(404, "멤버를 찾을 수 없습니다."),
     NOT_FOUND_POST(404, "게시글을 찾을 수 없습니다."),
     NOT_FOUND_COMMENT(404, "댓글을 찾을 수 없습니다."),
+    NOT_FOUND_LIKE(404, "좋아요를 찾을 수 없습니다."),
+    NOT_FOUND_SUBSCRIBE(404, "구독을 찾을 수 없습니다."),
 
     //500 INTERNAL SERVER ERROR
     INTERNAL_SERVER_ERROR(

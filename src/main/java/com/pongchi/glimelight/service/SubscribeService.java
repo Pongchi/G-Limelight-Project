@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pongchi.glimelight.api.v1.dto.subscribe.SubscribeCheckDto;
+import com.pongchi.glimelight.common.ResponseCode;
 import com.pongchi.glimelight.domain.member.Member;
 import com.pongchi.glimelight.domain.member.MemberRepository;
 import com.pongchi.glimelight.domain.subscribe.Subscribe;
 import com.pongchi.glimelight.domain.subscribe.SubscribeRepository;
+import com.pongchi.glimelight.exception.CustomException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,14 +26,23 @@ public class SubscribeService {
 
     @Transactional(readOnly = true)
     public Page<Subscribe> findAllByToMember(UUID toMemberId, Pageable pageable) {
-        Member toMember = memberRepository.findById(toMemberId).get();
+        Member toMember = memberRepository.findById(toMemberId)
+            .orElseThrow(
+                () -> new CustomException(ResponseCode.NOT_FOUND_MEMBER)
+            );
         return subscribeRepository.findAllByToMember(toMember, pageable);
     }
 
     @Transactional
     public long addSubscribe(UUID fromMemberId, UUID toMemberId) {
-        Member fromMember = memberRepository.findById(fromMemberId).get();
-        Member toMember = memberRepository.findById(toMemberId).get();
+        Member fromMember = memberRepository.findById(fromMemberId)
+            .orElseThrow(
+                () -> new CustomException(ResponseCode.NOT_FOUND_MEMBER)
+            );;
+        Member toMember = memberRepository.findById(toMemberId)
+            .orElseThrow(
+                () -> new CustomException(ResponseCode.NOT_FOUND_MEMBER)
+            );;
 
         Subscribe subscribe = new Subscribe(fromMember, toMember);
         subscribeRepository.save(subscribe);
@@ -44,10 +55,19 @@ public class SubscribeService {
 
     @Transactional
     public long subSubscribe(UUID fromMemberId, UUID toMemberId) {
-        Member fromMember = memberRepository.findById(fromMemberId).get();
-        Member toMember = memberRepository.findById(toMemberId).get();
+        Member fromMember = memberRepository.findById(fromMemberId)
+            .orElseThrow(
+                () -> new CustomException(ResponseCode.NOT_FOUND_MEMBER)
+            );
+        Member toMember = memberRepository.findById(toMemberId)
+            .orElseThrow(
+                () -> new CustomException(ResponseCode.NOT_FOUND_MEMBER)
+            );
 
-        Subscribe subscribe = subscribeRepository.findByFromMemberAndToMember(fromMember, toMember).get();
+        Subscribe subscribe = subscribeRepository.findByFromMemberAndToMember(fromMember, toMember)
+            .orElseThrow(
+                () -> new CustomException(ResponseCode.NOT_FOUND_SUBSCRIBE)
+            );
 
         fromMember.subMySubscribe(subscribe);
         toMember.subOtherSubscribe(subscribe);
@@ -59,12 +79,21 @@ public class SubscribeService {
 
     @Transactional(readOnly = true)
     public SubscribeCheckDto check(UUID fromMemberId, UUID toMemberId) {
-        Member fromMember = memberRepository.findById(fromMemberId).get();
-        Member toMember = memberRepository.findById(toMemberId).get();
+        Member fromMember = memberRepository.findById(fromMemberId)
+            .orElseThrow(
+                () -> new CustomException(ResponseCode.NOT_FOUND_MEMBER)
+            );
+        Member toMember = memberRepository.findById(toMemberId)
+            .orElseThrow(
+                () -> new CustomException(ResponseCode.NOT_FOUND_MEMBER)
+            );
 
-        Subscribe subscribe = subscribeRepository.findByFromMemberAndToMember(fromMember, toMember).orElse(null);
+        Subscribe subscribe = subscribeRepository.findByFromMemberAndToMember(fromMember, toMember)
+            .orElseThrow(
+                () -> new CustomException(ResponseCode.NOT_FOUND_SUBSCRIBE)
+            );
 
-        return new SubscribeCheckDto( subscribe != null ? true : false );
+        return new SubscribeCheckDto( subscribe );
     }
 
 }

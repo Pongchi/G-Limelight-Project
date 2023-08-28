@@ -35,15 +35,14 @@ public class MemberService {
 
     @Transactional(readOnly = true)
     public MemberLoginResponseDto login(MemberLoginRequestDto requestDto) {
-        Optional<Member> member = memberRepository.findByEmail(requestDto.getEmail());
-        
-        if (member.isEmpty()) {
-            throw new CustomException(ResponseCode.NOT_FOUND_MEMBER);
-        }
+        Member member = memberRepository.findByEmail(requestDto.getEmail())
+            .orElseThrow(
+                () -> new CustomException(ResponseCode.NOT_FOUND_MEMBER)
+            );
 
-        if (!passwordEncoder.matches(requestDto.getPassword(), member.get().getPassword())) {
+        if (!passwordEncoder.matches(requestDto.getPassword(), member.getPassword())) {
         }
-        return new MemberLoginResponseDto(member.get());
+        return new MemberLoginResponseDto(member);
     }
 
     @Transactional(readOnly = true)
