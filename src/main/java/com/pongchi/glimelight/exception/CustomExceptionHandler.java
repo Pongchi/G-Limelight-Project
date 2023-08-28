@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.pongchi.glimelight.api.v1.dto.ResponseDto;
+import com.pongchi.glimelight.api.v1.dto.ResponsesDto;
 import com.pongchi.glimelight.common.ResponseCode;
 
 @RestControllerAdvice
@@ -16,6 +17,14 @@ public class CustomExceptionHandler {
         return ResponseDto.createResponseEntity(
             ex.getResponseCode(),
             null
+        );
+    }
+
+    @ExceptionHandler({ CustomExceptions.class })
+    private ResponseEntity<?> handleCustomExceptions(CustomExceptions ex) {
+        return ResponsesDto.createResponsesEntity(
+            ex.getResponseCode(),
+            ex.getResults()
         );
     }
 
