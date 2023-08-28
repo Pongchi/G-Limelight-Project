@@ -15,6 +15,7 @@ public enum ResponseCode {
 
     // 컨트롤러에 없는 경로
     INVALID_PATH(404, "잘못된 경로입니다."),
+    NOT_FOUNDED_MEMBER(404, "멤버를 찾을 수 없습니다."),
 
     //500 INTERNAL SERVER ERROR
     INTERNAL_SERVER_ERROR(

@@ -1,5 +1,6 @@
 package com.pongchi.glimelight.service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,8 +11,10 @@ import com.pongchi.glimelight.api.v1.dto.member.MemberDto;
 import com.pongchi.glimelight.api.v1.dto.member.MemberLoginRequestDto;
 import com.pongchi.glimelight.api.v1.dto.member.MemberLoginResponseDto;
 import com.pongchi.glimelight.api.v1.dto.member.MemberRegisterRequestDto;
+import com.pongchi.glimelight.common.ResponseCode;
 import com.pongchi.glimelight.domain.member.Member;
 import com.pongchi.glimelight.domain.member.MemberRepository;
+import com.pongchi.glimelight.exception.CustomException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,16 +35,24 @@ public class MemberService {
 
     @Transactional(readOnly = true)
     public MemberLoginResponseDto login(MemberLoginRequestDto requestDto) {
-        Member member = memberRepository.findByEmail(requestDto.getEmail()).get();
-
-        if (!passwordEncoder.matches(requestDto.getPassword(), member.getPassword())) {
+        Optional<Member> member = memberRepository.findByEmail(requestDto.getEmail());
+        
+        if (member.isEmpty()) {
+            throw new CustomException(ResponseCode.NOT_FOUNDED_MEMBER);
         }
-        return new MemberLoginResponseDto(member);
+
+        if (!passwordEncoder.matches(requestDto.getPassword(), member.get().getPassword())) {
+        }
+        return new MemberLoginResponseDto(member.get());
     }
 
     @Transactional(readOnly = true)
     public MemberDto findById(UUID id) {
-        Member member = memberRepository.findById(id).get();
-        return new MemberDto(member);
+        Optional<Member> member = memberRepository.findById(id);
+
+        if (member.isEmpty()) {
+            throw new CustomException(ResponseCode.NOT_FOUNDED_MEMBER);
+        }
+        return new MemberDto(member.get());
     }
 }
