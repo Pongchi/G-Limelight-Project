@@ -1,5 +1,6 @@
 package com.pongchi.glimelight.service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -88,10 +89,7 @@ public class SubscribeService {
                 () -> new CustomException(ResponseCode.NOT_FOUND_MEMBER)
             );
 
-        Subscribe subscribe = subscribeRepository.findByFromMemberAndToMember(fromMember, toMember)
-            .orElseThrow(
-                () -> new CustomException(ResponseCode.NOT_FOUND_SUBSCRIBE)
-            );
+        Optional<Subscribe> subscribe = subscribeRepository.findByFromMemberAndToMember(fromMember, toMember);
 
         return new SubscribeCheckDto( subscribe );
     }
