@@ -12,6 +12,7 @@ import com.pongchi.glimelight.domain.like.Like;
 import com.pongchi.glimelight.domain.post.Post;
 import com.pongchi.glimelight.domain.subscribe.Subscribe;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -59,14 +60,14 @@ public class Member extends BaseTimeEntity {
     @Column(length = 32)
     private String nickname;
 
-    @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Post> posts;
 
-    @OneToMany(mappedBy = "toMember", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "toMember", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Subscribe> mySubscribes = new ArrayList<>();
     private Long mySubscribes_count = 0L;
 
-    @OneToMany(mappedBy = "fromMember", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "fromMember", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Subscribe> otherSubscribes = new ArrayList<>();;
     private Long otherSubscribes_count = 0L;
 
