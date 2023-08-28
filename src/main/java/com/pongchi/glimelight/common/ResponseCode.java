@@ -13,6 +13,12 @@ public enum ResponseCode {
     INVALID_PARAMETER(400, "파라미터 값을 확인해주세요."),
     NOT_FOUND_PARAMETER(400, "필요한 파라미터 값을 확인해주세요."),
 
+    // 401 Un-Authorization
+    UNAUTHORIZATION(401, "로그인을 먼저 해주세요."),
+
+    // 403 FORBIDDEN
+    FORBIDDEN_REQUEST(403, "Forbidden."),
+
     // 404 NOT FOUND
     INVALID_PATH(404, "잘못된 경로입니다."),
     NOT_FOUND_MEMBER(404, "멤버를 찾을 수 없습니다."),

@@ -1,6 +1,8 @@
 package com.pongchi.glimelight.exception;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -48,6 +50,22 @@ public class CustomExceptionHandler {
     private ResponseEntity<?> invalidPathException(Exception ex) {
         return ResponseDto.createResponseEntity(
             ResponseCode.NOT_FOUND_PARAMETER,
+            null
+        );
+    }
+
+    @ExceptionHandler({ AccessDeniedException.class })
+    private ResponseEntity<?> AccessDeniedException(Exception ex) {
+        return ResponseDto.createResponseEntity(
+            ResponseCode.FORBIDDEN_REQUEST,
+            null
+        );
+    }
+
+    @ExceptionHandler({ AuthenticationException.class })
+    private ResponseEntity<?> AuthenticationExcpetion(Exception ex) {
+        return ResponseDto.createResponseEntity(
+            ResponseCode.UNAUTHORIZATION,
             null
         );
     }
