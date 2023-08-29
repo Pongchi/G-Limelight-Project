@@ -62,11 +62,11 @@ public class JwtTokenProvider {
 
     public boolean validateToken(String token) {
         try {
-        Jwts.parser().setSigningKey(secret_key).parseClaimsJws(token);
-        return true;
+            Jwts.parser().setSigningKey(secret_key).parseClaimsJws(token);
+            return true;
         } catch (JwtException e) {
         // MalformedJwtException | ExpiredJwtException | IllegalArgumentException
-        throw new CustomException(ResponseCode.INTERNAL_SERVER_ERROR);
+            throw new CustomException(ResponseCode.INTERNAL_SERVER_ERROR);
         }
     }
 }

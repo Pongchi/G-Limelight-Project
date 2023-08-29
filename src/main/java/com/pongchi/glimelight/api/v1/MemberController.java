@@ -21,7 +21,6 @@ import com.pongchi.glimelight.exception.CustomExceptions;
 import com.pongchi.glimelight.service.MemberService;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
