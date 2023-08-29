@@ -1,5 +1,7 @@
 package com.pongchi.glimelight.exception;
 
+import java.security.SignatureException;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
