@@ -32,6 +32,10 @@ public class MemberService {
     
     @Transactional
     public UUID register(MemberRegisterRequestDto requestDto) {
+        if (memberRepository.existsByEmail( requestDto.getEmail() )) {
+            throw new CustomException(ResponseCode.CONCLICT_MEMBER);
+        }
+
         Member member = requestDto.toEntity();
         member.hashPassword(passwordEncoder);
 

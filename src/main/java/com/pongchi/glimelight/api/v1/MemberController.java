@@ -46,7 +46,7 @@ public class MemberController {
     }
 
     @GetMapping("/api/v1/members/{id}")
-    public ResponseEntity<?> findById(@NotBlank @PathVariable("id") UUID id, BindingResult bindingResult) {
+    public ResponseEntity<?> findById(@PathVariable("id") @NotBlank UUID id, BindingResult bindingResult) {
         List<String> errors = bindingResult.getAllErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList());
         
         if (errors.size() != 0) {

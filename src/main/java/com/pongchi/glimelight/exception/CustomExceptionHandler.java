@@ -32,6 +32,7 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler({ Exception.class })
     private ResponseEntity<?> handleServerException(Exception ex) {
+        System.out.println(ex);
         return ResponseDto.createResponseEntity(
             ResponseCode.INTERNAL_SERVER_ERROR,
             null
