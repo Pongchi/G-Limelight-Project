@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.UUID;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +23,11 @@ public class MemberServiceTest {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    @AfterEach
+    public void clean() {
+        memberRepository.deleteAll();
+    }
 
     @Test
     public void 회원가입() {

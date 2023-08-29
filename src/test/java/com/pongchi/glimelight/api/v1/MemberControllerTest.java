@@ -45,7 +45,7 @@ class MemberControllerTest {
         String url = "http://localhost:"+port+"/api/v1/members";
 
         //when
-        ResponseEntity<?> response = restTemplate.postForEntity(url, requestDto, ResponseEntity.class);
+        ResponseEntity<?> response = restTemplate.postForEntity(url, requestDto, Object.class);
 
         //then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
