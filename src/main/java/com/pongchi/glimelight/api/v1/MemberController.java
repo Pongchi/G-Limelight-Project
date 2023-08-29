@@ -46,13 +46,7 @@ public class MemberController {
     }
 
     @GetMapping("/api/v1/members/{id}")
-    public ResponseEntity<?> findById(@PathVariable("id") UUID id, BindingResult bindingResult) {
-        List<String> errors = bindingResult.getAllErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList());
-        
-        if (errors.size() != 0) {
-            throw new CustomExceptions(ResponseCode.INVALID_PARAMETER, errors);
-        }
-
+    public ResponseEntity<?> findById(@PathVariable("id") UUID id) {
         return createResponseEntity(
             ResponseCode.SUCCESS,
             memberService.findById(id)
