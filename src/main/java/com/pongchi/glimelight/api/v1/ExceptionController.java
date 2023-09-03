@@ -26,7 +26,7 @@ public class ExceptionController {
     @GetMapping("/exception/authentication-fail")
     public ResponseEntity<?> authenticationFail() {
         return createResponseEntity(
-            ResponseCode.UNAUTHENTICATION,
+            ResponseCode.UNAUTHENTICATION_FAIL,
             null
         );
     }

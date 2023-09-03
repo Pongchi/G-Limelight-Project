@@ -52,4 +52,12 @@ public class CustomExceptionHandler {
             null
         );
     }
+
+    @ExceptionHandler({ IllegalArgumentException.class })
+    private ResponseEntity<?> illegalArgumentException(Exception ex) {
+        return ResponseDto.createResponseEntity(
+            ResponseCode.FORMAT_ERROR,
+            null
+        );
+    }
 }

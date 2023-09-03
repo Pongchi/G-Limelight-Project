@@ -30,6 +30,7 @@ public class SecurityConfig {
 
     //권한 확인을 하지 않는 uri
     private static final AntPathRequestMatcher[] PERMIT_ALL_PATTERNS = new AntPathRequestMatcher[] {
+        AntPathRequestMatcher.antMatcher("/"),
         AntPathRequestMatcher.antMatcher("/api/v1/members"),
         AntPathRequestMatcher.antMatcher("/api/v1/members/login"),
         AntPathRequestMatcher.antMatcher("/api/v1/test"),

@@ -12,6 +12,7 @@ public enum ResponseCode {
     //400 BAD REQUEST 잘못된 요청
     INVALID_PARAMETER(400, "파라미터 값을 확인해주세요."),
     NOT_FOUND_PARAMETER(400, "필요한 파라미터 값을 확인해주세요."),
+    FORMAT_ERROR(400, "입력값 형식을 확인해주세요."),
 
     // 401 Un-Authorization
     UNAUTHENTICATION(401, "로그인을 먼저 해주세요."),
@@ -36,8 +37,7 @@ public enum ResponseCode {
     CONCLICT_MEMBER(409, "중복된 이메일로 가입된 회원이 있습니다."),
 
     //500 INTERNAL SERVER ERROR
-    INTERNAL_SERVER_ERROR(
-        500, "서버 에러입니다.");
+    INTERNAL_SERVER_ERROR(500, "서버 에러입니다.");
     
     private final int status;
     private final String message;

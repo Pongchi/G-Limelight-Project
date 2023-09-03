@@ -64,7 +64,8 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    public MemberDto findById(UUID id) {
+    public MemberDto findById(String stringId) {
+        UUID id = UUID.fromString(stringId);
         Member member = memberRepository.findById(id)
             .orElseThrow(
                 () -> new CustomException(ResponseCode.NOT_FOUND_MEMBER)

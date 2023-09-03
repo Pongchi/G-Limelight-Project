@@ -7,7 +7,6 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import com.pongchi.glimelight.common.ResponseCode;
-import com.pongchi.glimelight.exception.CustomException;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

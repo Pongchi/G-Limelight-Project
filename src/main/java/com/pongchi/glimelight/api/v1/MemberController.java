@@ -45,7 +45,7 @@ public class MemberController {
     }
 
     @GetMapping("/api/v1/members/{id}")
-    public ResponseEntity<?> findById(@PathVariable("id") UUID id) {
+    public ResponseEntity<?> findById(@PathVariable("id") String id) {
         return createResponseEntity(
             ResponseCode.SUCCESS,
             memberService.findById(id)
