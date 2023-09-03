@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,33 +33,35 @@ public class SecurityConfig {
         AntPathRequestMatcher.antMatcher("/api/v1/members"),
         AntPathRequestMatcher.antMatcher("/api/v1/members/login"),
         AntPathRequestMatcher.antMatcher("/api/v1/exception/**"),
+        AntPathRequestMatcher.antMatcher("/test"),
     };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // Disable csrf to use token
         http
-            .csrf().disable();
+            .csrf(CsrfConfigurer::disable);
 
         // No session will be created or used by spring security
         http
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        .sessionManagement(configurer -> configurer
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        );
         
         http
             .authorizeHttpRequests(request -> 
                 request
                     .requestMatchers(PERMIT_ALL_PATTERNS)
                     .permitAll()
-                    .requestMatchers(AntPathRequestMatcher.antMatcher("/api/**"))
-                    .authenticated()
+                    .anyRequest().authenticated()
         );
 
         http
-        .exceptionHandling()
-        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-        .accessDeniedHandler(accessDeniedHandler);
-
+            .exceptionHandling(
+                authenticationManager -> authenticationManager
+                            .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                            .accessDeniedHandler(accessDeniedHandler)
+            );
 
         // Apply JWT
         http.apply(new JwtSecurityConfig(jwtTokenProvider));

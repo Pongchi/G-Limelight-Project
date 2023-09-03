@@ -15,7 +15,8 @@ public enum ResponseCode {
 
     // 401 Un-Authorization
     UNAUTHENTICATION(401, "로그인을 먼저 해주세요."),
-    UNAUTHENTICATION_FAIL(401, "로그인 실패."),
+    UNAUTHENTICATION_FAIL(401, "인증 실패."),
+    TOKEN_AUTHENTICATION_FAIL(401, "토큰인증 실패."),
 
     // 403 FORBIDDEN
     FORBIDDEN_REQUEST(403, "Forbidden."),

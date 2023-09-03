@@ -10,6 +10,7 @@ import static com.pongchi.glimelight.api.v1.dto.ResponseDto.createResponseEntity
 
 import lombok.RequiredArgsConstructor;
 
+
 @RequiredArgsConstructor
 @RestController
 public class ExceptionController {
@@ -21,4 +22,18 @@ public class ExceptionController {
             null
         );
     }
+
+    @GetMapping("/api/v1/exception/authorization-fail")
+    public ResponseEntity<?> authorizationFail() {
+        return createResponseEntity(
+            ResponseCode.FORBIDDEN_REQUEST,
+            null
+        );
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<?> test() {
+        return createResponseEntity(ResponseCode.SUCCESS, "test");
+    }
+    
 }

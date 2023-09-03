@@ -25,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) {
         Member member = memberRepository.findByEmail(email)
             .orElseThrow(
-                () -> new CustomException(ResponseCode.NOT_FOUND_MEMBER)
+                () -> new CustomException(ResponseCode.TOKEN_AUTHENTICATION_FAIL)
             );
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
