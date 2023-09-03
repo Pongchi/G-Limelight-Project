@@ -50,7 +50,7 @@ public class MemberService {
             );
 
         if (!passwordEncoder.matches(requestDto.getPassword(), member.getPassword())) {
-            throw new CustomException(ResponseCode.UNAUTHORIZATION_FAIL);
+            throw new CustomException(ResponseCode.UNAUTHENTICATION_FAIL);
         }
 
         Authentication authentication = authenticationManager.authenticate(

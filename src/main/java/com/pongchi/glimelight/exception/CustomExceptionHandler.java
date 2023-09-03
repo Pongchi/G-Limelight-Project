@@ -3,6 +3,7 @@ package com.pongchi.glimelight.exception;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -66,7 +67,15 @@ public class CustomExceptionHandler {
     @ExceptionHandler({ AuthenticationException.class })
     private ResponseEntity<?> AuthenticationExcpetion(Exception ex) {
         return ResponseDto.createResponseEntity(
-            ResponseCode.UNAUTHORIZATION,
+            ResponseCode.UNAUTHENTICATION,
+            null
+        );
+    }
+
+    @ExceptionHandler({ HttpRequestMethodNotSupportedException.class })
+    private ResponseEntity<?> notSupportRequestMethodException(Exception ex) {
+        return ResponseDto.createResponseEntity(
+            ResponseCode.NOT_ALLOWED_METHOD,
             null
         );
     }

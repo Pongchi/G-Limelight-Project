@@ -14,8 +14,8 @@ public enum ResponseCode {
     NOT_FOUND_PARAMETER(400, "필요한 파라미터 값을 확인해주세요."),
 
     // 401 Un-Authorization
-    UNAUTHORIZATION(401, "로그인을 먼저 해주세요."),
-    UNAUTHORIZATION_FAIL(401, "로그인 실패."),
+    UNAUTHENTICATION(401, "로그인을 먼저 해주세요."),
+    UNAUTHENTICATION_FAIL(401, "로그인 실패."),
 
     // 403 FORBIDDEN
     FORBIDDEN_REQUEST(403, "Forbidden."),
@@ -27,6 +27,9 @@ public enum ResponseCode {
     NOT_FOUND_COMMENT(404, "댓글을 찾을 수 없습니다."),
     NOT_FOUND_LIKE(404, "좋아요를 찾을 수 없습니다."),
     NOT_FOUND_SUBSCRIBE(404, "구독을 찾을 수 없습니다."),
+
+    // 405 Method Not Allowed
+    NOT_ALLOWED_METHOD(405, "해당 요청의 메소드를 지원하지 않습니다."),
 
     // 409 CONFLICT
     CONCLICT_MEMBER(409, "중복된 이메일로 가입된 회원이 있습니다."),

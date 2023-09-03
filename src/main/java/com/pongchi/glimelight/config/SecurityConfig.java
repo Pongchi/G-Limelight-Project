@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.pongchi.glimelight.jwt.CustomAccessDeniedHandler;
+import com.pongchi.glimelight.jwt.JwtAuthenticationEntryPoint;
 import com.pongchi.glimelight.jwt.JwtTokenProvider;
 
 import lombok.RequiredArgsConstructor;
@@ -22,11 +24,14 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final CustomAccessDeniedHandler accessDeniedHandler;
 
     //권한 확인을 하지 않는 uri
     private static final AntPathRequestMatcher[] PERMIT_ALL_PATTERNS = new AntPathRequestMatcher[] {
         AntPathRequestMatcher.antMatcher("/api/v1/members"),
         AntPathRequestMatcher.antMatcher("/api/v1/members/login"),
+        AntPathRequestMatcher.antMatcher("/api/v1/exception/**"),
     };
 
     @Bean
@@ -48,6 +53,12 @@ public class SecurityConfig {
                     .requestMatchers(AntPathRequestMatcher.antMatcher("/api/**"))
                     .authenticated()
         );
+
+        http
+        .exceptionHandling()
+        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+        .accessDeniedHandler(accessDeniedHandler);
+
 
         // Apply JWT
         http.apply(new JwtSecurityConfig(jwtTokenProvider));
