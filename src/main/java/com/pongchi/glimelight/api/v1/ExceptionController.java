@@ -14,8 +14,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RestController
 public class ExceptionController {
+
+    @GetMapping("/exception/not-found")
+    public ResponseEntity<?> notFound() {
+        return createResponseEntity(
+            ResponseCode.INVALID_PATH,
+            null
+        );
+    }
     
-    @GetMapping("/api/v1/exception/authentication-fail")
+    @GetMapping("/exception/authentication-fail")
     public ResponseEntity<?> authenticationFail() {
         return createResponseEntity(
             ResponseCode.UNAUTHENTICATION,
@@ -23,7 +31,7 @@ public class ExceptionController {
         );
     }
 
-    @GetMapping("/api/v1/exception/authorization-fail")
+    @GetMapping("/exception/authorization-fail")
     public ResponseEntity<?> authorizationFail() {
         return createResponseEntity(
             ResponseCode.FORBIDDEN_REQUEST,
@@ -31,9 +39,11 @@ public class ExceptionController {
         );
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<?> test() {
-        return createResponseEntity(ResponseCode.SUCCESS, "test");
+    @GetMapping("/exception/interval-server-error")
+    public ResponseEntity<?> intervalServerError() {
+        return createResponseEntity(
+            ResponseCode.INTERNAL_SERVER_ERROR,
+            null
+        );
     }
-    
 }
