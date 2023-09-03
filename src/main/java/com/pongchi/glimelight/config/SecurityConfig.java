@@ -32,9 +32,9 @@ public class SecurityConfig {
     private static final AntPathRequestMatcher[] PERMIT_ALL_PATTERNS = new AntPathRequestMatcher[] {
         AntPathRequestMatcher.antMatcher("/api/v1/members"),
         AntPathRequestMatcher.antMatcher("/api/v1/members/login"),
-        AntPathRequestMatcher.antMatcher("/api/v1/exception/authorization-fail"),
-        AntPathRequestMatcher.antMatcher("/api/v1/exception/authorization-fail"),
         AntPathRequestMatcher.antMatcher("/api/v1/test"),
+
+        AntPathRequestMatcher.antMatcher("/exception/**"),
     };
 
     @Bean
