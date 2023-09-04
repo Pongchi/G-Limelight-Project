@@ -72,4 +72,13 @@ public class MemberService {
             );
         return new MemberDto(member);
     }
+
+    @Transactional(readOnly = true)
+    public MemberDto findById(UUID id) {
+        Member member = memberRepository.findById(id)
+            .orElseThrow(
+                () -> new CustomException(ResponseCode.NOT_FOUND_MEMBER)
+            );
+        return new MemberDto(member);
+    }
 }
