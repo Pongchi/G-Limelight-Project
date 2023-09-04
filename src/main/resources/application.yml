@@ -17,3 +17,6 @@ spring:
   config:
     import:
       - application-jwt.yml
+
+logging:
+  config: classpath:logback-dev.xml
