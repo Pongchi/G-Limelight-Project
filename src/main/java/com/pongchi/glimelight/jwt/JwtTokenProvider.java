@@ -21,6 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Component
 public class JwtTokenProvider {
+
     @Value("${jwt.token.secret-key}")
     private String secret_key;
 
@@ -46,8 +47,8 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        String username = Jwts.parser().setSigningKey(secret_key).parseClaimsJws(token).getBody().getSubject();
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        String email = Jwts.parser().setSigningKey(secret_key).parseClaimsJws(token).getBody().getSubject();
+        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
         
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
@@ -65,7 +66,7 @@ public class JwtTokenProvider {
             Jwts.parser().setSigningKey(secret_key).parseClaimsJws(token);
             return true;
         } catch (JwtException e) {
-        // MalformedJwtException | ExpiredJwtException | IllegalArgumentException
+            // MalformedJwtException | ExpiredJwtException | IllegalArgumentException
             throw new CustomException(ResponseCode.TOKEN_AUTHENTICATION_FAIL);
         }
     }
