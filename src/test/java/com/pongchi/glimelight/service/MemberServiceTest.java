@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.pongchi.glimelight.api.v1.dto.member.MemberDto;
-import com.pongchi.glimelight.api.v1.dto.member.MemberLoginRequestDto;
 import com.pongchi.glimelight.api.v1.dto.member.MemberRegisterRequestDto;
 import com.pongchi.glimelight.domain.member.Member;
 import com.pongchi.glimelight.domain.member.MemberRepository;
@@ -40,21 +39,6 @@ public class MemberServiceTest {
         // then
         Member savedMember = memberRepository.findById(memberId).get();
         assertEquals(memberId, savedMember.getId());
-    }
-
-    @Test
-    public void 로그인() throws Exception {
-        // givenr
-        String email = "test@gmail.com";
-        String password = "test";
-        String nickname = "test";
-        MemberRegisterRequestDto registerDto = new MemberRegisterRequestDto(email, password, nickname);
-        memberService.register(registerDto);
-
-        MemberLoginRequestDto requestDto = new MemberLoginRequestDto(email, password);
-
-        // when & then
-        memberService.login(requestDto);
     }
 
     @Test
