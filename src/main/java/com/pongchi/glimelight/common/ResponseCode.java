@@ -13,10 +13,12 @@ public enum ResponseCode {
     INVALID_PARAMETER(400, "파라미터 값을 확인해주세요."),
     NOT_FOUND_PARAMETER(400, "필요한 파라미터 값을 확인해주세요."),
     FORMAT_ERROR(400, "입력값 형식을 확인해주세요."),
+    TOKEN_EXPIRED(400, "인증토큰이 만료되었습니다. 다시 로그인해주세요."),
+    ACCESS_TOKEN_NOT_EXPIRED(400, "액세스토큰이 아직 만료되지 않았습니다."),
 
     // 401 Un-Authorization
     UNAUTHENTICATION(401, "로그인을 먼저 해주세요."),
-    UNAUTHENTICATION_FAIL(401, "인증 실패."),
+    AUTHENTICATION_FAIL(401, "인증 실패."),
     TOKEN_AUTHENTICATION_FAIL(401, "토큰인증 실패."),
 
     // 403 FORBIDDEN

@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.pongchi.glimelight.common.ResponseCode;
 import com.pongchi.glimelight.exception.CustomException;
 
 import jakarta.servlet.FilterChain;
@@ -24,11 +25,23 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         HttpServletResponse response,
         FilterChain filterChain
     ) throws ServletException, IOException {
-        String token = jwtTokenProvider.resolveToken(request);
+        String accessToken = jwtTokenProvider.resolveToken(request);
+                
+        if (accessToken == null) {
+            ResponseCode result = ResponseCode.UNAUTHENTICATION;
+            response.sendError(result.getStatus(), result.getMessage());
+            return;
+        }
+
         try {
-            if (token != null && jwtTokenProvider.validateToken(token)) {
-                Authentication auth = jwtTokenProvider.getAuthentication(token);
+            // Access Token 이 유효할 경우 통과
+            if (jwtTokenProvider.validateToken(accessToken, true)) {
+                Authentication auth = jwtTokenProvider.getAuthentication(accessToken);
                 SecurityContextHolder.getContext().setAuthentication(auth);
+            }
+            else {
+                ResponseCode result = ResponseCode.TOKEN_EXPIRED;
+                response.sendError(result.getStatus(), result.getMessage());
             }
             
         } catch (CustomException e) {

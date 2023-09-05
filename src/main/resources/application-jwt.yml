@@ -1,4 +1,7 @@
 jwt:
   token:
-    secret-key: bZSv3mQU9DTqmqyKuvozGo5NgA0AirKA
-    expire-length: 300000
+    access-secret-key: bZSv3mQU9DTqmqyKuvozGo5NgA0AirKA
+    refresh-secret-key: BbvhkpQ3YU2yXSvTWUKncjrt80nGs5yD
+
+    access-expire-length: 100000
+    refresh-expire-length: 900000
