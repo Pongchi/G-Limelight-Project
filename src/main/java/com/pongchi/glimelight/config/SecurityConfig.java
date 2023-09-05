@@ -32,7 +32,8 @@ public class SecurityConfig {
     private static final AntPathRequestMatcher[] PERMIT_ALL_PATTERNS = new AntPathRequestMatcher[] {
         AntPathRequestMatcher.antMatcher("/"),
         AntPathRequestMatcher.antMatcher("/api/v1/members"),
-        AntPathRequestMatcher.antMatcher("/api/v1/members/login"),
+        AntPathRequestMatcher.antMatcher("/api/v1/login"),
+        AntPathRequestMatcher.antMatcher("/api/v1/refresh"),
         AntPathRequestMatcher.antMatcher("/api/v1/test"),
 
         AntPathRequestMatcher.antMatcher("/exception/**"),
