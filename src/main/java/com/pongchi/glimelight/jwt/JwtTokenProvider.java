@@ -44,7 +44,6 @@ public class JwtTokenProvider {
 
         Date now = new Date();
         Date expiresIn = new Date(now.getTime() + ACCESS_EXPIRE_TIME);
-
         return Jwts.builder()
             .setClaims(claims)
             .setIssuedAt(now)
@@ -66,10 +65,14 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        String email = Jwts.parser().setSigningKey(JWT_ACCESS_SECRET_KEY).parseClaimsJws(token).getBody().getSubject();
-        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-        
-        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+        try {
+            String email = Jwts.parser().setSigningKey(JWT_ACCESS_SECRET_KEY).parseClaimsJws(token).getBody().getSubject();
+            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+    
+            return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+        } catch (Exception e) {
+            throw new CustomException(ResponseCode.TOKEN_AUTHENTICATION_FAIL);
+        }
     }
 
     public String resolveToken(HttpServletRequest req) {
@@ -83,10 +86,10 @@ public class JwtTokenProvider {
     public boolean validateToken(String token, boolean isAccessToken) {
         try {
             Jws<Claims> claims = Jwts.parser()
-                    .setSigningKey(isAccessToken ? JWT_ACCESS_SECRET_KEY : JWT_REFRESH_SECRET_KEY)
+                    .setSigningKey( (isAccessToken) ? JWT_ACCESS_SECRET_KEY : JWT_REFRESH_SECRET_KEY )
                     .parseClaimsJws(token);
 
-            return claims.getBody().getExpiration().before(new Date());
+            return claims.getBody().getExpiration().after(new Date());
         } catch (JwtException e) {
             // MalformedJwtException | ExpiredJwtException | IllegalArgumentException
             throw new CustomException(ResponseCode.TOKEN_AUTHENTICATION_FAIL);

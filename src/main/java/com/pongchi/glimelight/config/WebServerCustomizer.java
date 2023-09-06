@@ -11,11 +11,12 @@ public class WebServerCustomizer implements WebServerFactoryCustomizer<Configura
     
     @Override
     public void customize(ConfigurableWebServerFactory factory) {
+        ErrorPage errorPage400 = new ErrorPage(HttpStatus.BAD_REQUEST, "/exception/authentication-fail");
         ErrorPage errorPage401 = new ErrorPage(HttpStatus.UNAUTHORIZED, "/exception/authentication-fail");
         ErrorPage errorPage404 = new ErrorPage(HttpStatus.NOT_FOUND, "/exception/not-found");
         ErrorPage errorPage500 = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/exception/interval-server-error");
         ErrorPage errorPageEx = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/exception/interval-server-error");
 
-        factory.addErrorPages(errorPage401, errorPage404, errorPage500, errorPageEx);
+        factory.addErrorPages(errorPage400, errorPage401, errorPage404, errorPage500, errorPageEx);
     }
 }

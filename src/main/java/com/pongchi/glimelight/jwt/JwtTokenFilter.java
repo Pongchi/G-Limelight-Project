@@ -29,16 +29,18 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
         try {
             // Access Token 이 유효할 경우 통과
-            if (accessToken != null)
+            if (accessToken != null) {
                 if (jwtTokenProvider.validateToken(accessToken, true)) {
                     Authentication auth = jwtTokenProvider.getAuthentication(accessToken);
                     SecurityContextHolder.getContext().setAuthentication(auth);
                 }
                 else {
+                    SecurityContextHolder.clearContext();
                     ResponseCode result = ResponseCode.TOKEN_EXPIRED;
                     response.sendError(result.getStatus(), result.getMessage());
+                    return;
                 }
-            
+            }
         } catch (CustomException e) {
             SecurityContextHolder.clearContext();
             response.sendError(e.getResponseCode().getStatus(), e.getMessage());
