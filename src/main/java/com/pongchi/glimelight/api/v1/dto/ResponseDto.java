@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.pongchi.glimelight.common.ResponseCode;
 
+import jakarta.servlet.http.Cookie;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -17,5 +18,12 @@ public class ResponseDto {
     public static ResponseEntity<ResponseDto> createResponseEntity(ResponseCode code, Object result) {
         ResponseDto responseDto = new ResponseDto(code.getMessage(), result);
         return ResponseEntity.status(code.getStatus()).body(responseDto);
+    }
+
+    public static ResponseEntity<ResponseDto> createResponseEntity(ResponseCode code, Object result, Cookie cookie) {
+        ResponseDto responseDto = new ResponseDto(code.getMessage(), result);
+        return ResponseEntity.status(code.getStatus())
+            .header("Set-Cookie", cookie.toString())
+            .body(responseDto);
     }
 }

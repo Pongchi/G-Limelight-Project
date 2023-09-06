@@ -26,23 +26,18 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         FilterChain filterChain
     ) throws ServletException, IOException {
         String accessToken = jwtTokenProvider.resolveToken(request);
-                
-        if (accessToken == null) {
-            ResponseCode result = ResponseCode.UNAUTHENTICATION;
-            response.sendError(result.getStatus(), result.getMessage());
-            return;
-        }
 
         try {
             // Access Token 이 유효할 경우 통과
-            if (jwtTokenProvider.validateToken(accessToken, true)) {
-                Authentication auth = jwtTokenProvider.getAuthentication(accessToken);
-                SecurityContextHolder.getContext().setAuthentication(auth);
-            }
-            else {
-                ResponseCode result = ResponseCode.TOKEN_EXPIRED;
-                response.sendError(result.getStatus(), result.getMessage());
-            }
+            if (accessToken != null)
+                if (jwtTokenProvider.validateToken(accessToken, true)) {
+                    Authentication auth = jwtTokenProvider.getAuthentication(accessToken);
+                    SecurityContextHolder.getContext().setAuthentication(auth);
+                }
+                else {
+                    ResponseCode result = ResponseCode.TOKEN_EXPIRED;
+                    response.sendError(result.getStatus(), result.getMessage());
+                }
             
         } catch (CustomException e) {
             SecurityContextHolder.clearContext();

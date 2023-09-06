@@ -21,7 +21,6 @@ import com.pongchi.glimelight.exception.CustomExceptions;
 import com.pongchi.glimelight.service.TokenService;
 
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +33,7 @@ public class TokenController {
     private final TokenService tokenService;
 
     @PostMapping("/api/v1/login")
-    public ResponseEntity<?> login(@Valid @RequestBody MemberLoginRequestDto requestDto, BindingResult bindingResult, HttpServletResponse response) {
+    public ResponseEntity<?> login(@Valid @RequestBody MemberLoginRequestDto requestDto, BindingResult bindingResult) {
         List<String> errors = bindingResult.getAllErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList());
         
         if (errors.size() != 0) {
@@ -54,11 +53,10 @@ public class TokenController {
         cookie.setHttpOnly(true);
         cookie.setPath("/");
         
-        response.addCookie(cookie);
-        
         return createResponseEntity(
             ResponseCode.SUCCESS,
-            new MemberLoginResponseDto(tokenDto.getAccessToken())
+            new MemberLoginResponseDto(tokenDto.getAccessToken()),
+            cookie
         );
     }
     
