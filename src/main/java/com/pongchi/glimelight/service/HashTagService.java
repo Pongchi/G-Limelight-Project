@@ -26,7 +26,8 @@ public class HashTagService {
         if (existsByTag(tag)) throw new CustomException(ResponseCode.EXISTSHASHTAG);
 
         Hashtag hashtag = new Hashtag(tag);
-        return hashtagRepository.save(hashtag);
+        hashtagRepository.save(hashtag);
+        return hashtag;
     }
     
 }
