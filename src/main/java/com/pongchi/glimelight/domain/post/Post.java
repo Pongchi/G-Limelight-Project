@@ -10,7 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.pongchi.glimelight.domain.BaseTimeEntity;
 import com.pongchi.glimelight.domain.comment.Comment;
-// import com.pongchi.glimelight.domain.game.Game;
+import com.pongchi.glimelight.domain.game.Game;
 import com.pongchi.glimelight.domain.like.Like;
 import com.pongchi.glimelight.domain.member.Member;
 
@@ -60,9 +60,9 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "member_id")
     private Member writer;
 
-    // @ManyToOne
-    // @JoinColumn(name = "game_id")
-    // private Game game;
+    @ManyToOne
+    @JoinColumn(name = "game_id")
+    private Game game;
 
     @Column(length = 100, nullable = false)
     private String title;
@@ -85,7 +85,7 @@ public class Post extends BaseTimeEntity {
     private List<Comment> comments = new ArrayList<Comment>();
 
     @OneToMany(mappedBy = "post")
-    private List<PostHashTag> postHashTags = new ArrayList<PostHashTag>();
+    private List<PostHashtag> postHashTags = new ArrayList<PostHashtag>();
 
     @Builder
     public Post(Member writer, String title, String description, String videoUrl) {

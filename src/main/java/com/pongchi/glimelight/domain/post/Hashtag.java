@@ -23,6 +23,10 @@ public class Hashtag {
     private String tag;
 
     @OneToMany(mappedBy = "hashtag")
-    private List<PostHashTag> postHashTag;
+    private List<PostHashtag> postHashTag;
+
+    public Hashtag(String tag) {
+        this.tag = tag;
+    }
     
 }

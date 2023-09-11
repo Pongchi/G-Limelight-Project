@@ -11,7 +11,7 @@ import lombok.Getter;
 
 @Getter
 @Entity
-public class PostHashTag {
+public class PostHashtag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
