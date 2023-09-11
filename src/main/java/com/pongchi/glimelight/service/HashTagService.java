@@ -1,13 +1,13 @@
 package com.pongchi.glimelight.service;
 
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.pongchi.glimelight.common.ResponseCode;
 import com.pongchi.glimelight.domain.post.Hashtag;
 import com.pongchi.glimelight.domain.post.HashtagRepository;
+import com.pongchi.glimelight.exception.CustomException;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -16,16 +16,17 @@ public class HashTagService {
 
     private final HashtagRepository hashtagRepository;
 
+    @Transactional(readOnly = true)
+    public boolean existsByTag(String tag) {
+        return hashtagRepository.existsByTag(tag);
+    }
+
     @Transactional
-    public Hashtag findByTag(String tag) {
-        Optional<Hashtag> hashtag = hashtagRepository.findByTag(tag);
-        
-        if (hashtag.isEmpty()) {
-            Hashtag newHashtag = new Hashtag(tag);
-            return hashtagRepository.save(newHashtag);
-        } else {
-            return hashtag.get();
-        }
+    public Hashtag create(String tag) {
+        if (existsByTag(tag)) throw new CustomException(ResponseCode.EXISTSHASHTAG);
+
+        Hashtag hashtag = new Hashtag(tag);
+        return hashtagRepository.save(hashtag);
     }
     
 }
