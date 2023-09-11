@@ -16,6 +16,7 @@ public class Hashtag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "hashtag_id")
     private long id;
 
     @Column(nullable = false, unique = true)

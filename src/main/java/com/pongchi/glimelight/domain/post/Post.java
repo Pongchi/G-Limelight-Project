@@ -82,10 +82,10 @@ public class Post extends BaseTimeEntity {
     private long like_count = 0;
 
     @OneToMany(mappedBy = "post")
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<Comment>();
 
-    // @OneToMany(mappedBy = "post")
-    // private ArrayList<PostHashTag> postHashTags;
+    @OneToMany(mappedBy = "post")
+    private List<PostHashTag> postHashTags = new ArrayList<PostHashTag>();
 
     @Builder
     public Post(Member writer, String title, String description, String videoUrl) {
