@@ -23,4 +23,16 @@ public class GameService {
 
         return game;
     }
+
+    public boolean existsByName(String name) {
+        return gameRepository.existsByName(name);
+    }
+
+    public Game create(String name, String bannerUrl) {
+        if (existsByName(name)) throw new CustomException(ResponseCode.EXISTSGAME);
+
+        Game game = new Game(name, bannerUrl);
+        gameRepository.save(game);
+        return game;
+    }
 }

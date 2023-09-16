@@ -16,6 +16,7 @@ public enum ResponseCode {
     TOKEN_EXPIRED(400, "인증토큰이 만료되었습니다. 다시 로그인해주세요."),
     ACCESS_TOKEN_NOT_EXPIRED(400, "액세스토큰이 아직 만료되지 않았습니다."),
     EXISTSHASHTAG(400, "이미 해시태그가 존재합니다."),
+    EXISTSGAME(400, "이미 게임이 존재합니다."),
 
     // 401 Un-Authorization
     UNAUTHENTICATION(401, "로그인을 먼저 해주세요."),

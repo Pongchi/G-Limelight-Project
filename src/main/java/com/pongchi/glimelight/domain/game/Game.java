@@ -30,4 +30,9 @@ public class Game {
 
     @OneToMany(mappedBy = "game")
     private List<Post> posts = new ArrayList<Post>();
+
+    public Game(String name, String bannerUrl) {
+        this.name = name;
+        this.bannerUrl = bannerUrl;
+    }
 }
