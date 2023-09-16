@@ -32,6 +32,7 @@ public enum ResponseCode {
     NOT_FOUND_COMMENT(404, "댓글을 찾을 수 없습니다."),
     NOT_FOUND_LIKE(404, "좋아요를 찾을 수 없습니다."),
     NOT_FOUND_SUBSCRIBE(404, "구독을 찾을 수 없습니다."),
+    NOT_FOUND_GAME(404, "해당 게임을 찾을 수 없습니다."),
 
     // 405 Method Not Allowed
     NOT_ALLOWED_METHOD(405, "해당 요청의 메소드를 지원하지 않습니다."),

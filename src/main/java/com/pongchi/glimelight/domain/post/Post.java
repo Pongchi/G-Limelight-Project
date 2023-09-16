@@ -90,7 +90,6 @@ public class Post extends BaseTimeEntity {
     @Builder
     public Post(Member writer, String title, String description, String videoUrl) {
         this.writer = writer;
-        // this.game = game;
         this.title = title;
         this.description = description;
         this.videoUrl = videoUrl;
@@ -110,5 +109,9 @@ public class Post extends BaseTimeEntity {
     public void subLike(Like like) {
         likes.remove(like);
         like_count--;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 }
